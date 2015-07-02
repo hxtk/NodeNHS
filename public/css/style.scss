@@ -21,18 +21,14 @@ i{
 }
 .navbar {
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 60px;
   background-color: grey;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
-
-  #search{
-
-  }
 
   img{
     height: 60px;
@@ -43,7 +39,7 @@ i{
   #dropdown{
     position: absolute;
     right: 15px;
-    top: 0px;
+    top: 0;
     height: 60px;
     line-height: 60px;
     width: 100px;
@@ -78,5 +74,27 @@ i{
       border-bottom: 3px solid orange;
     }
 
+  }
+}
+
+#search{
+  display: inline-block;
+  width: 300px;
+  input{
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+    height: 40px;
+    margin-top: 5px;
+
+    padding-left: 15px;
+    padding-right: 15px;
+
+    font-size: 24px;
+    font-family: helvetica, arial, sans-serif;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
   }
 }
