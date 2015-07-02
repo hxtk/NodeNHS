@@ -15,6 +15,7 @@ app.get('/',function(req, res){
     });
 });
 app.get('/js/router.js',function(req,res){
+    res.set({'Content-Type':'text/javascript'});
 
 });
 

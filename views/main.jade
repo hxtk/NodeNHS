@@ -17,9 +17,11 @@ html(lang="en" ng-app="nhs")
    body(ng-controller="mainCtl")
       .navbar
          img(src="/png/nhs.png")
+         &nbsp;&nbsp;
          a(href="#news") News
          a(href="#signup") Projects
          a(href="#u.#{id}") My Profile
+         input#search(type="text")
          #dropdown
             span#ddtitle Admin #[i.down]
             a(href="javascript:;") Link
