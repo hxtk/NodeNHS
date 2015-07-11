@@ -1,0 +1,38 @@
+{
+  "name": "NodeNHS",
+  "version": "0.2a",
+  "description": "Colleton County National Honor Society",
+  "author": "Peter Sanders <edistojr@gmail.com>",
+  "contributors": [
+    {
+      "name": "Peter Sanders",
+      "email": "edistojr@gmail.com"
+    },
+    {
+      "name": "Caleb O'Quinn",
+      "email": "oquinncaleb@gmail.com"
+    }
+  ],
+  "scripts": {
+    "test": "vows --spec --isolate",
+    "start": "node app.js"
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NodeNHS"
+  },
+  "bugs": {
+    "url": "https://github.com/hxtk/NodeNHS/issues"
+  },
+  "dependencies": {
+    "primus": "*",
+    "async": "~0.8.0",
+    "express": "4.2.x",
+    "winston": "git://github.com/flatiron/winston#master",
+    "bigpipe": "bigpipe/pagelet",
+    "plates": "https://github.com/flatiron/plates/tarball/master"
+  },
+  "analyze": true,
+  "license": "GNU GPL v2.0"
+}
