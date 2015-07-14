@@ -9,20 +9,22 @@ html(lang="en" ng-app="app")
 
       script(src="/js/angular.min.js")
       script(src="/js/angular-route.min.js")
+      script(src="/js/angular-jwt.js")
       script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
-      script(src="/js/readmore.min.js")
+      script(src="https://cdn.socket.io/socket.io-1.3.5.js")
       script(src="/js/router.js")
       script(src="/js/controllers.js")
       script(src="/js/script.js")
 
       title Colleton County NHS
-   body()
+   body(ng-controller="mainCtl")
       .navbar
          img(src="/png/nhs-color-white.png")
          | &nbsp;&nbsp;
          a.nav(href="#news") News
          a.nav(href="#group") Projects
-         a.nav(href="#u/#{id}") My Profile
+         a.nav(href="#chat") Live Chat
+         a.nav(href="#u/{{token.id}}") My Profile
          #search(ng-controller="searchCtl")
             input(type="text" ng-change="getsearch()" ng-model="query" placeholder="Search...")
             .resultbox(ng-repeat="x in results.users")
@@ -32,8 +34,8 @@ html(lang="en" ng-app="app")
                      .resulttitle {{x.title}}
          #dropdown
             span#ddtitle Admin #[i.down]
-            a(href="javascript:;") Link
-            a(href="javascript:;") Test
+            a.nav(href="javascript:;") Link
+            a.nav(href="javascript:;") Test
       div#quicklook
       div#main
          div(ng-view)

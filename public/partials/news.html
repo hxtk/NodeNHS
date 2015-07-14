@@ -4,6 +4,6 @@
         <div ng-repeat="y in x.auth"><a href="#u/{{y._id}}">{{y.name}}</a>&mdash;</div>&nbsp;&nbsp;
     </div>
     <div class="date">{{x.date | date:'MM/dd/yyyy'}}</div>
-    <div class="content">{{x.body}}</div>
+    <div class="content" ng-bind-html="x.body">{{x.body}}</div>
     <hr>
 </div>

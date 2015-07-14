@@ -1,7 +1,7 @@
 /**
  * Created by peter on 7/2/15.
  */
-var nhs = angular.module('app', ['ngRoute']);
+var nhs = angular.module('app', ['ngRoute','angular-jwt']);
 
 nhs.config(function($routeProvider){
    $routeProvider
@@ -16,10 +16,6 @@ nhs.config(function($routeProvider){
        .when('/group',{
            templateUrl : 'partials/group.html',
            controller : 'groupCtl'
-       })
-       .when('/admin',{
-           templateUrl : 'partials/user.html',
-           controller : 'userCtl'
        })
        .when('/u/:param',{
            templateUrl : 'partials/user.html',

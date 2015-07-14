@@ -141,7 +141,8 @@ body {
   font-size: 10px;
   color: #191919;
   float: left;
-  padding-right: 1em; }
+  padding-right: 1em;
+  height: 18px; }
 
 .date {
   font-size: 10px;
@@ -156,7 +157,7 @@ body {
   top: 70px;
   left: calc(50% - 400px);
   background-color: white;
-  height: calc(100% - 80px);
+  height: calc(100% - 110px);
   width: 800px;
   overflow-y: auto;
   overflow-x: hidden;

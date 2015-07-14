@@ -25,16 +25,26 @@ var gs = new Schema({
 });
 
 var us = new Schema({
-    email: String,
-    password: String,
-    name: String,
+    email: {type:String, required: true, unique: true},
+    password: {type:String, required: true},
+    name: {type:String, required: true},
+    descr: String,
+    class: Number,
     hours: {
-        group: Number,
-        other: Number
+        group: {type:Number,default:0},
+        other: {type:Number,default:0}
     },
     perms: {type: Number, default: 1},
     title: String,
-    group: [Schema.Types.ObjectId]
+    group: [Schema.Types.ObjectId],
+    mailpub: Boolean,
+    token: String
+});
+
+var cs = new Schema({
+    sender: {id: Schema.Types.ObjectId, name: String},
+    message: String,
+    createdAt: {type: Date, expires: 86400, default: Date.now()}
 });
 
 module.exports.News = mongoose.model('News', ns);
