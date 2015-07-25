@@ -28,9 +28,40 @@ app.factory('socket', function ($rootScope) {
 
 app.controller('mainCtl', ['$http', '$scope', '$rootScope', function($http, $scope, $rootScope){
     $scope.token = $rootScope.token;
+    $scope.vanish = function(arr){
+        for(var i= 0,l=arr.length; i<l;i++){
+            arr[i].style.display = 'none';
+        }
+    };
+    switch($scope.token.perms){
+        case 0:
+            $scope.vanish(document.querySelectorAll(".perm-1"));
+            $scope.vanish(document.querySelectorAll(".perm-2"));
+            $scope.vanish(document.querySelectorAll(".perm-3"));
+            $scope.vanish(document.querySelectorAll(".perm-4"));
+            break;
+        case 1:
+            $scope.vanish(document.querySelectorAll(".perm-2"));
+            $scope.vanish(document.querySelectorAll(".perm-3"));
+            $scope.vanish(document.querySelectorAll(".perm-4"));
+            $scope.vanish(document.querySelectorAll(".g"));
+            break;
+        case 2:
+            $scope.vanish(document.querySelectorAll(".perm-3"));
+            $scope.vanish(document.querySelectorAll(".perm-4"));
+            $scope.vanish(document.querySelectorAll(".g"));
+            break;
+        case 3:
+            $scope.vanish(document.querySelectorAll(".perm-4"));
+            $scope.vanish(document.querySelectorAll(".g"));
+            break;
+        case 4:
+            $scope.vanish(document.querySelectorAll(".g"));
+            break;
+    }
 }]);
 
-app.controller('logCtl', ['$http', '$scope', function($http,$scope){
+app.controller('logCtl', ['$http', '$scope', '$rootScope', function($http,$scope,$rootScope){
     $scope.log_in = function(){
         $http.post('/auth/token', {email:$scope.email,password:$scope.password}).
             success(function(data, status, headers, config) {
@@ -41,10 +72,11 @@ app.controller('logCtl', ['$http', '$scope', function($http,$scope){
                     // TODO: Make toast notifications
                 }
                 localStorage.setItem('token',data.token);
-                location.reload();
+                if($rootScope.goto) location.assign($rootScope.goto);
+                else location.reload();
+
             }).
             error(function(data, status, headers, config) {
-
             });
     };
 }]);
@@ -98,7 +130,7 @@ app.controller('chatCtl', ['$scope', '$http', 'socket', '$rootScope', function (
                     id: $scope.token.id
                 },
                 message: m,
-                token: $rootScope.token
+                token: localStorage.getItem('token')
             });
         }
     };

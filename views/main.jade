@@ -21,10 +21,12 @@ html(lang="en" ng-app="app")
       .navbar
          img(src="/png/nhs-color-white.png")
          | &nbsp;&nbsp;
-         a.nav(href="#news") News
-         a.nav(href="#group") Projects
-         a.nav(href="#chat") Live Chat
-         a.nav(href="#u/{{token.id}}") My Profile
+         a.nav(href="#/news") News
+         a.perm-1.nav(href="#/group") Projects
+         a.perm-1.nav(href="#/chat") Live Chat
+         a.perm-1.nav(href="#/u/{{token.id}}") My Profile
+         a.g.nav(href="#/login") Sign In
+         a.g.nav(href="#/register") Register
          #search(ng-controller="searchCtl")
             input(type="text" ng-change="getsearch()" ng-model="query" placeholder="Search...")
             .resultbox(ng-repeat="x in results.users")
@@ -34,8 +36,8 @@ html(lang="en" ng-app="app")
                      .resulttitle {{x.title}}
          #dropdown
             span#ddtitle {{token.title}} #[i.down]
-            a.nav(href="javascript:;") Link
-            a.nav(href="javascript:;") Test
-            a.nav(href="javascript:delete localStorage.token;location.reload();") Sign Out
+            a.g.nav(href="#/login") Sign In
+            a.g.nav(href="#/register") Register
+            a.perm-1.nav(href="javascript:delete localStorage.token;location.reload();") Sign Out
       div#main
          div(ng-view)
