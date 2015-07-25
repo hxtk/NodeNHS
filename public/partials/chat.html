@@ -1,0 +1,11 @@
+<div id="chat">
+    <form ng-submit="submit()">
+        <input type="text" placeholder="Message" ng-model="message"><button>Send</button>
+    </form>
+
+    <div class="message" ng-repeat="x in messages">
+        <a href="#/u/{{x.sender.id}}">{{x.sender.name}}:</a><br>
+        <span>{{x.message}}</span>
+    </div>
+
+</div>

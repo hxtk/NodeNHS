@@ -1,0 +1,185 @@
+BEGIN FORUM
+
+html:
+
+<div class="forumblock1">
+    <div class="title">FAQs</div>
+    <div class="user">Joe -</div>
+    <div class="date">&nbsp;Dec 29, 1997</div>
+</div>
+
+css:
+
+.forumblock1 {
+    padding:10px;
+    width:100%;
+    background-color:darkgrey;
+}
+.forumblock2 {
+    padding:10px;
+    width:100%;
+    background-color:lightblue;
+}
+.title {
+    font-size:22px;
+    color:blue;
+}
+.user {
+    font-size:14px;
+    color:black;
+    float:left;
+}
+.date {
+    font-size:14px;
+    color:black;
+}
+
+
+END FORUM
+
+BEGIN USER PAGE
+
+html:
+
+<div class="user">
+    <div class="topbar">
+        <img class="userimg" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSqsgA738DhgmGeKwiVxobPGwukv9jMonSgd_NX0a8thMjPdcSv"></img>
+        <div class="namegroup">
+            <div class="username">Joshua Harris</div>
+            <div class="usertitle">Truck Guy (Sr.)</div>
+        </div>
+    </div>
+    <div id="container">
+        <div class="column">
+            <div class="description">My name is Josh Harris, I like trucks like the S10. I like LEDs and HIDs and mostly I like going mudding in the swamp. I like thick wheels a lot, and rims are my favorite part of the car I have. After I paint my truck it will look better than urs</div>
+            <div class="containerpr">Total Hours: 15
+                <br>
+                <progress max="40" value="15"></progress>
+                <br>Group Hours: 5
+                <br>
+                <progress max="10" value="5"></progress>
+            </div>
+        </div>
+        <div class="column">
+            <div class="event">Event A</div>
+        </div>
+    </div>
+</div>
+
+css:
+
+.user {
+
+    width:100%;
+
+    background-color:grey;
+
+}
+
+progress {
+
+    width:100%;
+
+}
+
+.topbar {
+
+    height:200px;
+
+    width:100%;
+
+    background-color:lightblue;
+
+}
+
+.namegroup {
+
+    height:200px;
+
+    display: table-cell;
+
+    vertical-align: bottom;
+
+}
+
+.userimg {
+
+    float:left;
+
+    padding:5px;
+
+    width:190px;
+
+    height:190px;
+
+}
+
+.username {
+
+    padding:5px;
+
+    color:blue;
+
+    font-size:24px;
+
+}
+
+.usertitle {
+
+    padding:5px;
+
+    padding-top:0px;
+
+    color:#000066;
+
+    font-size:16px;
+
+}
+
+#container {
+
+    display:inline;
+
+}
+
+.column {
+
+    padding:10px 5px 0px 5px;
+
+    text-align:center;
+
+    width:46%;
+
+    float:left;
+
+}
+
+.description {
+
+    padding-bottom:10px;
+
+    font-size:16px;
+
+    text-align:left;
+
+    border-bottom:3px gray solid;
+
+}
+
+.event {
+
+    border-bottom:3px solid gray;
+
+}
+
+.eventdate {
+
+}
+
+.containerpr {
+
+    margin-top:10px;
+
+}
+
+END USER PAGE

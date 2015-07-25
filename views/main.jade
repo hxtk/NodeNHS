@@ -33,9 +33,9 @@ html(lang="en" ng-app="app")
                      .resultname {{x.name}}
                      .resulttitle {{x.title}}
          #dropdown
-            span#ddtitle Admin #[i.down]
+            span#ddtitle {{token.title}} #[i.down]
             a.nav(href="javascript:;") Link
             a.nav(href="javascript:;") Test
-      div#quicklook
+            a.nav(href="javascript:delete localStorage.token;location.reload();") Sign Out
       div#main
          div(ng-view)

@@ -3,7 +3,6 @@
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var db = mongoose.connection;
 
 var ns = new Schema({
     title: String,
@@ -50,3 +49,4 @@ var cs = new Schema({
 module.exports.News = mongoose.model('News', ns);
 module.exports.Group = mongoose.model('Group', gs);
 module.exports.Users = mongoose.model('Users', us);
+module.exports.Chat = mongoose.model('Chat', cs);
