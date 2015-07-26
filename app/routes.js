@@ -2,6 +2,14 @@
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
 
+// Document Rendering
+var marked = require('marked');
+marked.setOptions({
+    sanitize : true,
+    smartypants : true
+
+});
+
 module.exports = function(app,models,KEY){
 
     app.get('/',function(req, res){
@@ -10,7 +18,25 @@ module.exports = function(app,models,KEY){
 
 
     // API Routes
-    app.get('/api/news',function(req,res){
+    app.get('/api/search',function(req,res){
+        var re = new RegExp(req.query.q, 'i');
+
+        models.Users.find().or([{ 'name': { $regex: re }}, { 'title': { $regex: re }}]).sort('name.first').exec(function(err, users) {
+            var answer = {users:[],groups:[]};
+            for(var i = 0; i < users.length; i++){
+                var tmp = {
+                    id: users[i]._id,
+                    name: users[i].name,
+                    title: users[i].title
+                };
+                answer.users.push(tmp);
+            }
+            res.json(answer);
+        });
+    });
+
+    //API Read Routes
+    app.get('/api/read/news',function(req,res){
         models.News.find({}).sort('-date').exec(function(err,news){
             if(err){
                 var answer = [{
@@ -24,11 +50,11 @@ module.exports = function(app,models,KEY){
         });
     });
 
-    app.get('/api/group',function(req,res){
+    app.get('/api/read/group',function(req,res){
 
     });
 
-    app.get('/api/chat',function(req,res){
+    app.get('/api/read/chat',function(req,res){
         models.Chat.find({}).sort('-createdAt').exec(function(err,msgs){
             if(err){
                 var answer = [{
@@ -42,7 +68,7 @@ module.exports = function(app,models,KEY){
         });
     });
 
-    app.get('/api/user',function(req,res){
+    app.get('/api/read/user',function(req,res){
         if(!req.query.id){
             res.json({name:"Error",title:"No ID found in request"});
         }
@@ -73,26 +99,28 @@ module.exports = function(app,models,KEY){
         });
     });
 
-    app.get('/api/search',function(req,res){
-        var re = new RegExp(req.query.q, 'i');
-
-        models.Users.find().or([{ 'name': { $regex: re }}, { 'title': { $regex: re }}]).sort('name.first').exec(function(err, users) {
-            var answer = {users:[],groups:[]};
-            for(var i = 0; i < users.length; i++){
-                var tmp = {
-                    id: users[i]._id,
-                    name: users[i].name,
-                    title: users[i].title
-                };
-                answer.users.push(tmp);
-            }
-            res.json(answer);
-        });
+    // API Write Routes
+    app.post('/api/write/news',function(req,res){
+        if(req.user.perms < 2){
+            res.json({
+                type:'error',
+                title:'Unauthorized',
+                msg:"You don't have permission to do that!"
+            });
+        }else{
+            new models.News({
+                title: req.body.title,
+                auth: {
+                    name: req.user.name,
+                    id: req.user.id
+                },
+                body: marked(req.body.article)
+            }).save();
+        }
     });
 
     // Auth Routes
     app.post('/auth/token', function(req, res){
-        console.log("Username: %s\nPassword: %s",req.body.email,req.body.password);
         models.Users.findOne({email: req.body.email}).exec(function(err,user){
             if(err){ res.json({error:"Database Call failed"}); return console.log(err); }
             if(!user){

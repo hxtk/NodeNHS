@@ -95,7 +95,7 @@ app.controller('searchCtl', ['$scope', '$http', function ($scope, $http){
 }]);
 
 app.controller('newsCtl', ['$scope', '$http', '$sce', function ($scope, $http, $sce){
-    $http.get('/api/news')
+    $http.get('/api/read/news')
         .success(function(res){
             $scope.articles = res;
             for(var i = 0; i < $scope.articles.length; i++){
@@ -104,9 +104,10 @@ app.controller('newsCtl', ['$scope', '$http', '$sce', function ($scope, $http, $
         });
 }]);
 
-app.controller('chatCtl', ['$scope', '$http', 'socket', '$rootScope', function ($scope, $http, socket, $rootScope){
+app.controller('chatCtl', ['$scope', '$http', 'socket', function ($scope, $http, socket){
     $scope.messages = [];
-    $http.get('/api/chat')
+    $scope.ding = new Audio('/wav/ding.wav');
+    $http.get('/api/read/chat')
         .success(function (res) {
             for(var i = 0; i < res.length; i++){
                 if(res[i].sender.id == $scope.token.id) res[i].sender.name = "You";
@@ -135,7 +136,9 @@ app.controller('chatCtl', ['$scope', '$http', 'socket', '$rootScope', function (
         }
     };
     socket.on('msg',function(data){
+        if(data.sender.id == $scope.token.id) data.sender.name = "You";
         $scope.messages.unshift(data);
+        if(!document.hasFocus() && data.sender.id != $scope.token.id) $scope.ding.play();
     });
 }]);
 
