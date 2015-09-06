@@ -35,8 +35,8 @@ module.exports = function(app,models,KEY){
         });
     });
 
-    //API Read Routes
-    app.get('/api/read/news',function(req,res){
+    // News Routes
+    app.get('/api/news',function(req,res){
         models.News.find({}).sort('-date').exec(function(err,news){
             if(err){
                 var answer = [{
@@ -49,12 +49,116 @@ module.exports = function(app,models,KEY){
             res.json(news);
         });
     });
+    app.post('/api/news',function(req,res){
+        if(!req.user){
+            res.json({
+                type:'error',
+                title: 'Unauthorized',
+                msg: 'You have to be logged in for that!'
+            })
+        }
+        if(req.user.perms < 2){
+            res.json({
+                type:'error',
+                title:'Unauthorized',
+                msg:"You don't have permission to do that!"
+            });
+        }else{
+            new models.News({
+                title: req.body.title,
+                auth: [{
+                    name: req.user.name,
+                    id: req.user.id
+                }],
+                body: marked(req.body.article)
+            }).save(function(err){
+                    if(err){
+                        res.json({
+                            type:"error",
+                            title:"Database Error",
+                            msg:"Saving to database failed; please try again later"
+                        });
+                    }
+                });
+        }
+    });
+    app.put('/api/news/:id',function(req,res){
+        if(!req.user){
+            res.json({
+                type:'error',
+                title: 'Unauthorized',
+                msg: 'You have to be logged in for that!'
+            });
+            return;
+        }
+        if(req.user.perms < 2){
+            res.json({
+                type:'error',
+                title:'Unauthorized',
+                msg:"You don't have permission to do that!"
+            });
+            return;
+        }
 
-    app.get('/api/read/group',function(req,res){
-
+        var id = mongoose.Types.ObjectId.createFromHexString(req.param.id);
+        models.News.findOne({_id:id}).exec(function(err,news){
+            var idin = false;
+            for(var i= 0,l=news.auth.length; i < l; i++){
+                if(news.auth[i].id == req.user.id){ idin = true; break; }
+            }
+            if(!idin) news.auth[i].push({id:req.user.id,name:req.user.name});
+            news.body = marked(req.body.article);
+            news.save(function(err){
+                if(err){
+                    console.log(err);
+                    res.json({
+                        type:"error",
+                        title:"Database Error",
+                        msg:"Saving to database failed; please try again later"
+                    });
+                }
+            });
+        });
+    });
+    app.delete('/api/news/:id',function(req,res){
+        if(!req.user){
+            res.json({
+                type:'error',
+                title: 'Unauthorized',
+                msg: 'You have to be logged in for that!'
+            });
+            return;
+        }
+        if(req.user.perms < 2){
+            res.json({
+                type:'error',
+                title:'Unauthorized',
+                msg:"You don't have permission to do that!"
+            });
+            return;
+        }
+        var id = mongoose.Types.ObjectId.createFromHexString(req.param.id);
+        models.News.findOne({_id:id}).remove().exec(function(err,news){
+            if(err){
+                console.log(err);
+                res.json({
+                    type: 'error',
+                    title: 'Database',
+                    msg: 'Deleting failed!'
+                });
+            }
+        });
     });
 
-    app.get('/api/read/chat',function(req,res){
+    // Group Projects Routes
+    app.get('/api/group',function(req,res){
+        res.statusCode(501);
+        res.send("Not implemented");
+    });
+
+    // Chat Route
+    app.get('/api/chat',function(req,res){
+
         models.Chat.find({}).sort('-createdAt').exec(function(err,msgs){
             if(err){
                 var answer = [{
@@ -68,14 +172,25 @@ module.exports = function(app,models,KEY){
         });
     });
 
-    app.get('/api/read/user',function(req,res){
-        if(!req.query.id){
+    // User Text Routes
+    app.get('/api/user/:id/data',function(req,res){
+        if(!req.user){
+            res.json({
+                error: {
+                    type: 'error',
+                    title: 'Authentication Error',
+                    body: 'You\'re not allowed to do that!'
+                }
+            });
+            return;
+        }
+        if(!req.param.id){
             res.json({name:"Error",title:"No ID found in request"});
         }
-        if(!req.query.id.match(/^[0-9a-z]{24}$/i)){
+        if(!req.param.id.match(/^[0-9a-z]{24}$/i)){
             res.json({name:"Error",title:"Malformed ID"});
         }
-        var id = mongoose.Types.ObjectId.createFromHexString(req.query.id);
+        var id = mongoose.Types.ObjectId.createFromHexString(req.param.id);
         models.Users.findOne({"_id":id}).exec(function(e,u){
             if(e){
                 res.json({name:"Error",title:"Database connection failed"});
@@ -98,26 +213,28 @@ module.exports = function(app,models,KEY){
             res.json(answer);
         });
     });
+    app.post('/api/user/data',function(req,res){
 
-    // API Write Routes
-    app.post('/api/write/news',function(req,res){
-        if(req.user.perms < 2){
-            res.json({
-                type:'error',
-                title:'Unauthorized',
-                msg:"You don't have permission to do that!"
-            });
-        }else{
-            new models.News({
-                title: req.body.title,
-                auth: {
-                    name: req.user.name,
-                    id: req.user.id
-                },
-                body: marked(req.body.article)
-            }).save();
-        }
     });
+    app.put('/api/user/data',function(req,res){
+
+    });
+    app.get('/api/user/:id/img',function(req,res){
+        if(!req.user){
+            res.json({
+                error: {
+                    type: 'error',
+                    title: 'Authentication Error',
+                    body: 'You\'re not allowed to do that!'
+                }
+            });
+            return;
+        }
+        res.setHeader('X-Content-Type-Options','nosniff');
+    });
+
+
+
 
     // Auth Routes
     app.post('/auth/token', function(req, res){
