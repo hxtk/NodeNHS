@@ -27,35 +27,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(forceSSL);
 app.use(express.static(__dirname+'/public'));
-app.use('/admin/logs',jwtCheck, function(req,res,next){
-	if(req.user) {
-		if (req.user.perms >= 4) next();
-		else {
-			console.tag("Malicious")
-				.time()
-				.error("[%s] %s (id: %s) requested logs! Unauthorized!",req.ip,req.user.name, req.user.id);
-			res.json({
-				type:'error',
-				title:'Unauthorized',
-				msg:"You don't have permission to do that!"
-			});
-		}
-	} else {
-		console.tag("Malicious")
-			.time()
-			.error("[%s]: Unauthenticated request for logs", req.ip);
-		res.json({
-			type:'error',
-			title:'Unauthorized',
-			msg:"You don't have permission to do that!"
-		});
-	}
-},scribe.webPanel());
 
 // SSL
 var options = {
-	key: fs.readFileSync('./keys/key.pem'),
-	cert: fs.readFileSync('./keys/key-cert.pem')
+	key: fs.readFileSync('./keys/node.key'),
+	cert: fs.readFileSync('./keys/node.crt')
 };
 var server = https.createServer(options,app);
 

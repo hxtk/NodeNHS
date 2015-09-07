@@ -1,0 +1,20 @@
+<div class="container">
+    <img src="/png/nhs-alt.png">
+</div>
+<hr>
+<div class="container" ng-controller="logCtl">
+    <h2>Colleton County National Honors Society</h2>
+
+    <form id="signin" ng-submit="register()"> <a href="#/login" style="margin-left:15px;">Log In</a>
+
+        <fieldset>
+            <input type="text" placeholder="Full Name" ng-model="name" />
+            <input type="email" placeholder="Email" ng-model="email" />
+            <input type="email" placeholder="Confirm Email" ng-model="cemail" />
+            <input type="password" placeholder="Password" ng-model="password" />
+            <input type="password" placeholder="Confirm Password" ng-model="cpassword" />
+            <input type="number" placeholder="Graduation Year" ng-model="year" />
+            <button>Submit</button>
+        </fieldset>
+    </form>
+</div>

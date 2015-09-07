@@ -7,9 +7,9 @@ html(lang="en" ng-app="app")
       link(rel="stylesheet" href="/css/style.css")
       link(rel="icon" href="/favicon/favicon.ico")
 
-      script(src="/js/angular.min.js")
-      script(src="/js/angular-route.min.js")
-      script(src="/js/angular-jwt.js")
+      script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js")
+      script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-route.js")
+      script(src="/js/angular-jwt.min.js")
       script(src="https://cdn.socket.io/socket.io-1.3.5.js")
       script(src="/js/router.js")
       script(src="/js/controllers.js")
@@ -18,7 +18,7 @@ html(lang="en" ng-app="app")
       title Colleton County NHS
    body(ng-controller="mainCtl")
       .navbar
-         img(src="/png/nhs-color-white.png")
+         img(src="/png/nhs-white.png")
          | &nbsp;&nbsp;
          a.nav(href="#/news") News
          a.perm-1.nav(href="#/group") Projects

@@ -89,6 +89,10 @@ nhs.config(function($routeProvider){
         login : {
             templateUrl : 'partials/login.html',
             controller : 'logCtl'
+        },
+        register : {
+            templateUrl : 'partials/register.html',
+            controller : 'registerCtl'
         }
     };
     $routeProvider
@@ -98,6 +102,7 @@ nhs.config(function($routeProvider){
         .when('/u/:param',routes.user)
         .when('/chat',routes.chat)
         .when('/login',routes.login)
+        .when('/register',routes.register)
 });
 
 nhs.run(function($rootScope,$http,jwtHelper){
