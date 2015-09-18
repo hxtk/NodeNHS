@@ -269,7 +269,7 @@ module.exports = function(app,models,KEY){
         res.setHeader('X-Content-Type-Options','nosniff');
     });
 
-
+ root
 
 
     // Auth Routes

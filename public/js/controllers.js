@@ -83,7 +83,6 @@ app.controller('logCtl', ['$http', '$scope', '$rootScope', 'toast', function($ht
         $http.post('/auth/token', {email:$scope.email,password:$scope.password})
             .success(function(data, status, headers, config) {
                 if(data.error){
-                    console.log(data.error);
                     toast({type:'error',msg:data.error});
                     return;
                 }
@@ -135,7 +134,7 @@ app.controller('registerCtl', ['$http', '$scope', '$rootScope', 'toast', functio
                 toast({msg:'success!'});
                 console.log(data);
                 localStorage.setItem('token',data.token);
-                //location.reload();
+                location.reload();
 
             })
             .error(function(data, status, headers, config) {
