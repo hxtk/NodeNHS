@@ -173,7 +173,7 @@ module.exports = function(app,models,KEY){
     });
 
     // User Text Routes
-    app.get('/api/user/:id/data',function(req,res){
+    app.get('/api/user/:id',function(req,res){
         if(!req.user){
             res.json({
                 error: {
@@ -213,13 +213,44 @@ module.exports = function(app,models,KEY){
             res.json(answer);
         });
     });
-    app.post('/api/user/data',function(req,res){
+    app.post('/api/user',function(req,res){
+        if(!req.body.email||!req.body.password||!req.body.name||!req.body.year){
+            res.json({
+                msg:{
+                    type: 'error',
+                    title: 'Fields missing',
+                    text: 'Please fill out all fields'
+                }
+            });
+        }
+        var nUser = new models.Users({
+            email: req.body.email,
+            password: req.body.password,
+            name: req.body.name,
+            class: req.body.year
+        });
+        nUser.save(function(err) {
+                if (err) {
+                    console.log(err);
+                    res.json({
+                        msg: {
+                            type: 'error',
+                            title: 'Server error',
+                            text: 'Please try again later'
+                        }
+                    });
+                }
+                res.json({
+                    token:{
+
+                    }
+                });
+            });
+    });
+    app.put('/api/user/:id',function(req,res){
 
     });
-    app.put('/api/user/data',function(req,res){
-
-    });
-    app.get('/api/user/:id/img',function(req,res){
+    app.get('/api/user/:id',function(req,res){
         if(!req.user){
             res.json({
                 error: {

@@ -1,10 +1,8 @@
 // Core
-var https = require('https');
-var fs = require('fs');
+var http = require('http');
 
 // Server
 var express = require('express');
-var forceSSL = require('express-force-ssl');
 var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
@@ -25,15 +23,9 @@ var jwtCheck = expressJwt({secret:KEY,credentialsRequired: false});
 app.use('/api', jwtCheck);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
-app.use(forceSSL);
 app.use(express.static(__dirname+'/public'));
 
-// SSL
-var options = {
-	key: fs.readFileSync('./keys/node.key'),
-	cert: fs.readFileSync('./keys/node.crt')
-};
-var server = https.createServer(options,app);
+var server = http.createServer(app);
 
 // Set up Socket.IO
 var io = require('socket.io').listen(server);
@@ -45,5 +37,4 @@ require('./app/routes')(app,models,KEY);
 require('./app/socket')(io,models,KEY);
 
 // Execute
-app.listen(80);
-server.listen(443);
+app.listen(8080);

@@ -11,7 +11,8 @@ var ns = new Schema({
         id: Schema.Types.ObjectId
     }],
     date: { type: Date, default: Date.now },
-    body: String
+    body: String,
+    createdAt: {type:Date,expires:94608000,default:Date.now()}
 });
 
 var gs = new Schema({
@@ -20,24 +21,25 @@ var gs = new Schema({
     value: Number,
     desc: String,
     members: [Schema.Types.ObjectId],
-    max: Number
+    max: Number,
+    createdAt: {type:Date,expires:94608000,default:Date.now()}
 });
 
 var us = new Schema({
     email: {type:String, required: true, unique: true},
     password: {type:String, required: true},
     name: {type:String, required: true},
-    descr: String,
     class: Number,
     hours: {
         group: {type:Number,default:0},
         other: {type:Number,default:0}
     },
     perms: {type: Number, default: 1},
-    title: String,
+    title: {type: String, default: "Member"},
     group: [Schema.Types.ObjectId],
-    mailpub: Boolean,
-    token: String
+    mailpub: {type:Boolean, default:true},
+    token: String,
+    createdAt: {type:Date,expires:94608000,default:Date.now()}
 });
 
 var cs = new Schema({
