@@ -25,6 +25,19 @@ app.factory('socket', function ($rootScope) {
         }
     };
 });
+app.factory('toast', function($rootScope){
+    return {
+        clear: function(){
+            $rootScope.toast = [];
+        },
+        add: function(ts,ti,tx){
+            $rootScope.toast.push({type:ts,title:ti,msg:tx});
+        },
+        rem: function(){
+            $rootScope.toast.pop();
+        }
+    }
+});
 
 app.controller('mainCtl', ['$http', '$scope', '$rootScope', function($http, $scope, $rootScope){
     $scope.token = $rootScope.token;
@@ -63,8 +76,8 @@ app.controller('mainCtl', ['$http', '$scope', '$rootScope', function($http, $sco
 
 app.controller('logCtl', ['$http', '$scope', '$rootScope', function($http,$scope,$rootScope){
     $scope.log_in = function(){
-        $http.post('/auth/token', {email:$scope.email,password:$scope.password}).
-            success(function(data, status, headers, config) {
+        $http.post('/auth/token', {email:$scope.email,password:$scope.password})
+            .success(function(data, status, headers, config) {
                 if(data.error){
                     console.log(data.error);
                     //toast({type:'error',title:'Auth Error',msg:data.error});
@@ -75,8 +88,47 @@ app.controller('logCtl', ['$http', '$scope', '$rootScope', function($http,$scope
                 if($rootScope.goto) location.assign($rootScope.goto);
                 else location.reload();
 
-            }).
-            error(function(data, status, headers, config) {
+            })
+            .error(function(data, status, headers, config) {
+                // Toast here
+            });
+    };
+}]);
+
+app.controller('registerCtl', ['$http', '$scope', '$rootScope', function($http,$scope,$rootScope){
+    $scope.register = function(){
+        if($scope.name == "" || $scope.email == "" || $scope.cemail == "" || $scope.password == "" || $scope.cpassword == "" || $scope.year == ""){
+            // Toast "must fill in all fields"
+            return null;
+        }
+        if($scope.email != $scope.cemail){
+            // Emails don't match
+            return null;
+        }
+        if($scope.password != $scope.cpassword){
+            // Passwords don't match
+            return null;
+        }
+        $http.post('/api/user', {
+            email:$scope.email,
+            password:$scope.password,
+            name:$scope.name,
+            class:$scope.year
+        })
+            .success(function(data, status, headers, config) {
+                if(data.error){
+                    console.log(data.error);
+                    //toast({type:'error',title:'Auth Error',msg:data.error});
+                    return;
+                    // TODO: Make toast notifications
+                }
+                localStorage.setItem('token',data.token);
+                if($rootScope.goto) location.assign($rootScope.goto);
+                else location.reload();
+
+            })
+            .error(function(data, status, headers, config) {
+                // Toast here
             });
     };
 }]);
