@@ -25,18 +25,22 @@ app.factory('socket', function ($rootScope) {
         }
     };
 });
-app.factory('toast', function($rootScope){
-    return {
-        clear: function(){
-            $rootScope.toast = [];
-        },
-        add: function(ts,ti,tx){
-            $rootScope.toast.push({type:ts,title:ti,msg:tx});
-        },
-        rem: function(){
-            $rootScope.toast.pop();
+app.factory('toast', function(){
+    humane.info = humane.spawn({ addnCls: 'humane-libnotify-info', timeout: 1000 });
+    humane.error = humane.spawn({addnCls: 'humane-libnotify-error',timeout: 2000 });
+    return function(data){
+        if(!data.type){
+            humane.log(data.msg);
+            return;
         }
-    }
+        if(data.type=='error'){
+            humane.error(data.msg);
+        }else if(data.type=='info'){
+            humane.info(data.msg);
+        }else{
+            humane.log(data.msg);
+        }
+    };
 });
 
 app.controller('mainCtl', ['$http', '$scope', '$rootScope', function($http, $scope, $rootScope){
@@ -74,15 +78,14 @@ app.controller('mainCtl', ['$http', '$scope', '$rootScope', function($http, $sco
     }
 }]);
 
-app.controller('logCtl', ['$http', '$scope', '$rootScope', function($http,$scope,$rootScope){
+app.controller('logCtl', ['$http', '$scope', '$rootScope', 'toast', function($http,$scope,$rootScope,toast){
     $scope.log_in = function(){
         $http.post('/auth/token', {email:$scope.email,password:$scope.password})
             .success(function(data, status, headers, config) {
                 if(data.error){
                     console.log(data.error);
-                    //toast({type:'error',title:'Auth Error',msg:data.error});
+                    toast({type:'error',msg:data.error});
                     return;
-                    // TODO: Make toast notifications
                 }
                 localStorage.setItem('token',data.token);
                 if($rootScope.goto) location.assign($rootScope.goto);
@@ -90,45 +93,53 @@ app.controller('logCtl', ['$http', '$scope', '$rootScope', function($http,$scope
 
             })
             .error(function(data, status, headers, config) {
-                // Toast here
+                toast({type:'error',msg:'Something went wrong!'});
             });
     };
 }]);
 
-app.controller('registerCtl', ['$http', '$scope', '$rootScope', function($http,$scope,$rootScope){
+app.controller('registerCtl', ['$http', '$scope', '$rootScope', 'toast', function($http,$scope,$rootScope,toast){
     $scope.register = function(){
+        if(!$scope.name || !$scope.email || !$scope.cemail || !$scope.password || !$scope.cpassword || !$scope.year){
+            toast({type:'info',msg:'must fill in all fields'});
+            console.log([$scope.name,$scope.email,$scope.cemail,$scope.password,$scope.cpassword,$scope.year]);
+            return null;
+        }
         if($scope.name == "" || $scope.email == "" || $scope.cemail == "" || $scope.password == "" || $scope.cpassword == "" || $scope.year == ""){
-            // Toast "must fill in all fields"
+            toast({type:'info',msg:'must fill in all fields'});
             return null;
         }
         if($scope.email != $scope.cemail){
-            // Emails don't match
+            toast({type:'info',msg:'mismatched emails'});
             return null;
         }
         if($scope.password != $scope.cpassword){
-            // Passwords don't match
+            toast({type:'info',msg:'mismatched passwords'});
             return null;
         }
+        console.log("Does it try to submit?");
         $http.post('/api/user', {
             email:$scope.email,
             password:$scope.password,
             name:$scope.name,
-            class:$scope.year
+            year:$scope.year
         })
             .success(function(data, status, headers, config) {
+                console.log(data);
+                console.log("E for effort!");
                 if(data.error){
                     console.log(data.error);
-                    //toast({type:'error',title:'Auth Error',msg:data.error});
+                    toast(data.error);
                     return;
-                    // TODO: Make toast notifications
                 }
+                toast({msg:'success!'});
+                console.log(data);
                 localStorage.setItem('token',data.token);
-                if($rootScope.goto) location.assign($rootScope.goto);
-                else location.reload();
+                //location.reload();
 
             })
             .error(function(data, status, headers, config) {
-                // Toast here
+                toast({type:'info',msg:'something went wrong!'});
             });
     };
 }]);

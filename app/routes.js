@@ -214,37 +214,42 @@ module.exports = function(app,models,KEY){
         });
     });
     app.post('/api/user',function(req,res){
-        if(!req.body.email||!req.body.password||!req.body.name||!req.body.year){
+        if(req.body.email===undefined||req.body.password===undefined||req.body.name===undefined||!req.body.year===undefined){
             res.json({
-                msg:{
+                error:{
                     type: 'error',
-                    title: 'Fields missing',
-                    text: 'Please fill out all fields'
+                    msg: 'Please fill out all fields'
                 }
             });
+            return;
         }
         var nUser = new models.Users({
             email: req.body.email,
-            password: req.body.password,
+            password: bcrypt.hashSync(req.body.password),
             name: req.body.name,
-            class: req.body.year
+            year: req.body.year
         });
         nUser.save(function(err) {
                 if (err) {
                     console.log(err);
                     res.json({
-                        msg: {
+                        error: {
                             type: 'error',
-                            title: 'Server error',
-                            text: 'Please try again later'
+                            msg: 'something went wrong!'
                         }
                     });
                 }
-                res.json({
-                    token:{
-
-                    }
-                });
+            var profile = {
+                id: nUser._id,
+                email: nUser.email,
+                name: nUser.name,
+                hours: nUser.hours,
+                perms: nUser.perms,
+                group: nUser.group,
+                title: nUser.title
+            };
+            var token = jwt.sign(profile, KEY, {expiresInMinutes: 60 * 48});
+            res.json({token: token});
             });
     });
     app.put('/api/user/:id',function(req,res){
