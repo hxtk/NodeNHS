@@ -37,4 +37,4 @@ require('./app/routes')(app,models,KEY);
 require('./app/socket')(io,models,KEY);
 
 // Execute
-app.listen(8080);
+server.listen(8080);
