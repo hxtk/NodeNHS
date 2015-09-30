@@ -42,6 +42,17 @@ app.factory('toast', function(){
         }
     };
 });
+app.factory('markd', function(){
+    return function(mdstring){
+        marked(mdstring,{
+            sanitize : true,
+            smartypants : true,
+            tables : false,
+            breaks : false
+        });
+    };
+});
+
 
 app.controller('mainCtl', ['$http', '$scope', '$rootScope', function($http, $scope, $rootScope){
     $scope.token = $rootScope.token;
@@ -162,7 +173,7 @@ app.controller('newsCtl', ['$scope', '$http', '$sce', function ($scope, $http, $
         });
 }]);
 
-app.controller('chatCtl', ['$scope', '$http', 'socket', function ($scope, $http, socket){
+app.controller('chatCtl', ['$scope', '$http', '$sce', 'socket', 'markd', function ($scope, $http, $sce, socket, markd){
     $scope.messages = [];
     $scope.ding = new Audio('/wav/ding.wav');
     $http.get('/api/chat')
@@ -184,7 +195,7 @@ app.controller('chatCtl', ['$scope', '$http', 'socket', function ($scope, $http,
                     name: "You",
                     id: $scope.token.id
                 },
-                message: m
+                message: markd(m)
             });
             socket.emit('msg', {
                 sender: {
@@ -200,6 +211,9 @@ app.controller('chatCtl', ['$scope', '$http', 'socket', function ($scope, $http,
         if(data.sender.id == $scope.token.id) data.sender.name = "You";
         $scope.messages.unshift(data);
         if(!document.hasFocus() && data.sender.id != $scope.token.id) $scope.ding.play();
+    });
+    socket.on('toast',function(data){
+        toast(data);
     });
 }]);
 

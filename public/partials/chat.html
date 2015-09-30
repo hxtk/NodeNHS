@@ -5,7 +5,7 @@
 
     <div class="message" ng-repeat="x in messages">
         <a href="#/u/{{x.sender.id}}">{{x.sender.name}}:</a><br>
-        <span>{{x.message}}</span>
+        <span ng-bind-html="x.message">{{x.message}}</span>
     </div>
 
 </div>
