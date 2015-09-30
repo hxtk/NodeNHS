@@ -191,6 +191,7 @@ app.controller('chatCtl', ['$scope', '$http', '$sce', 'socket', 'toast', 'markd'
         var m = $scope.message;
         if(m != '') {
             $scope.message = '';
+            console.log(markd(m));
             $scope.messages.unshift({
                 sender: {
                     name: "You",
@@ -198,6 +199,7 @@ app.controller('chatCtl', ['$scope', '$http', '$sce', 'socket', 'toast', 'markd'
                 },
                 message: $sce.trustAsHtml(markd(m))
             });
+
             socket.emit('msg', {
                 sender: {
                     name: $scope.token.name,
