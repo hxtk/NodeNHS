@@ -44,7 +44,7 @@ app.factory('toast', function(){
 });
 app.factory('markd', function(){
     return function(mdstring){
-        marked(mdstring,{
+        return marked(mdstring,{
             sanitize : true,
             smartypants : true,
             tables : false,
