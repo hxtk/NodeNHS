@@ -91,9 +91,13 @@ body{
 }
 
 #search {
-  position: absolute;
+/*  position: absolute;
   top: 5px;
-  left: calc(50% - 200px);
+  left: calc(50% - 200px);*/
+  position: relative;
+  top:0;
+  left:0;
+  float: left;
   z-index: 2;
   display: inline-block;
   width: 434px;
