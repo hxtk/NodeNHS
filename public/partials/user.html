@@ -1,6 +1,6 @@
 <div class="user">
     <div class="username">{{user.name}}</div>
-    <div class="usertitle">Truck Guy</div>
+    <div class="usertitle">{{user.title}}</div>
     Total Hours: {{user.hours.other + user.hours.group}}
     <progress max="40" value="{{user.hours.other + user.hours.group}}"></progress>
     <br>Group Hours: {{user.hours.group}}

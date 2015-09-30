@@ -251,3 +251,13 @@ h2 {
   #chat button {
     height: 32px;
     width: 20%; }
+
+.user {
+  width: 100%;
+  background-color: #EBF5FF;
+  text-align: center; }
+  .user .username {
+    font-size: 36px; }
+  .user .usertitle {
+    margin-bottom: 10px;
+    font-size: 26px; }

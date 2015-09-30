@@ -301,3 +301,16 @@ h2 {
   }
 
 }
+
+.user {
+  width:100%;
+  background-color:#EBF5FF;
+  text-align:center;
+  .username {
+    font-size:36px;
+  }
+  .usertitle {
+    margin-bottom:10px;
+    font-size:26px;
+  }
+}
