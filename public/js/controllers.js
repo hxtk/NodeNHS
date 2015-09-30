@@ -182,6 +182,7 @@ app.controller('chatCtl', ['$scope', '$http', '$sce', 'socket', 'toast', 'markd'
                 toast(res.error);
             }
             for(var i = 0; i < res.length; i++){
+                res[i].message = $sce.trustAsHtml(res[i].message);
                 if(res[i].sender.id == $scope.token.id) res[i].sender.name = "You";
             }
             $scope.messages = res;
