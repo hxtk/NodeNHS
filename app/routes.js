@@ -244,7 +244,6 @@ module.exports = function(app,models,KEY){
                 name: nUser.name,
                 hours: nUser.hours,
                 perms: nUser.perms,
-                group: nUser.group,
                 title: nUser.title
             };
             var token = jwt.sign(profile, KEY, {expiresInMinutes: 60 * 48});
@@ -287,7 +286,6 @@ module.exports = function(app,models,KEY){
                         name: user.name,
                         hours: user.hours,
                         perms: user.perms,
-                        group: user.group,
                         title: user.title
                     };
                     var token = jwt.sign(profile, KEY, {expiresInMinutes: 60 * 48});
