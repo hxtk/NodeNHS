@@ -25,11 +25,13 @@ module.exports = function(io,models,KEY){
                     sender: msg.sender,
                     message: msg.message
                 }).save(function(err){
-                    console.log(err);
-                    return socket.emit('toast', {
-                        type:'info',
-                        msg:'database error<br>your message was not saved'
-                    });
+                    if(err != null){
+                        console.log(err);
+                        return socket.emit('toast', {
+                            type:'info',
+                            msg:'database error<br>your message was not saved'
+                        });
+                    }
                 });
             });
         });
