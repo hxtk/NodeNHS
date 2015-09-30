@@ -173,7 +173,7 @@ app.controller('newsCtl', ['$scope', '$http', '$sce', function ($scope, $http, $
         });
 }]);
 
-app.controller('chatCtl', ['$scope', '$http', '$sce', 'socket', 'markd', function ($scope, $http, $sce, socket, markd){
+app.controller('chatCtl', ['$scope', '$http', '$sce', 'socket', 'toast', 'markd', function ($scope, $http, $sce, socket, toast, markd){
     $scope.messages = [];
     $scope.ding = new Audio('/wav/ding.wav');
     $http.get('/api/chat')
