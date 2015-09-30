@@ -196,7 +196,7 @@ app.controller('chatCtl', ['$scope', '$http', '$sce', 'socket', 'toast', 'markd'
                     name: "You",
                     id: $scope.token.id
                 },
-                message: markd(m)
+                message: $sce.trustAsHtml(markd(m))
             });
             socket.emit('msg', {
                 sender: {
@@ -210,6 +210,7 @@ app.controller('chatCtl', ['$scope', '$http', '$sce', 'socket', 'toast', 'markd'
     };
     socket.on('msg',function(data){
         if(data.sender.id == $scope.token.id) data.sender.name = "You";
+        data.message = $sce.trustAsHtml(data.message);
         $scope.messages.unshift(data);
         if(!document.hasFocus() && data.sender.id != $scope.token.id) $scope.ding.play();
     });

@@ -242,6 +242,8 @@ h2 {
       padding-left: 20px; }
       #chat div span p {
         display: inline; }
+        #chat div span p a {
+          text-decoration: underline; }
   #chat input, #chat button {
     border: 0;
     -webkit-border-radius: 2px;
