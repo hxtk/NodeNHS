@@ -178,7 +178,6 @@ module.exports = function(app,models,KEY){
             res.json({
                 error: {
                     type: 'error',
-                    title: 'Authentication Error',
                     body: 'You\'re not allowed to do that!'
                 }
             });

@@ -92,7 +92,7 @@ app.controller('logCtl', ['$http', '$scope', '$rootScope', 'toast', function($ht
 
             })
             .error(function(data, status, headers, config) {
-                toast({type:'error',msg:'Something went wrong!'});
+                toast({type:'info',msg:'Something went wrong!'});
             });
     };
 }]);
@@ -116,7 +116,6 @@ app.controller('registerCtl', ['$http', '$scope', '$rootScope', 'toast', functio
             toast({type:'info',msg:'mismatched passwords'});
             return null;
         }
-        console.log("Does it try to submit?");
         $http.post('/api/user', {
             email:$scope.email,
             password:$scope.password,
@@ -124,14 +123,11 @@ app.controller('registerCtl', ['$http', '$scope', '$rootScope', 'toast', functio
             year:$scope.year
         })
             .success(function(data, status, headers, config) {
-                console.log(data);
-                console.log("E for effort!");
                 if(data.error){
                     console.log(data.error);
                     toast(data.error);
                     return;
                 }
-                toast({msg:'success!'});
                 console.log(data);
                 localStorage.setItem('token',data.token);
                 location.reload();
@@ -171,11 +167,13 @@ app.controller('chatCtl', ['$scope', '$http', 'socket', function ($scope, $http,
     $scope.ding = new Audio('/wav/ding.wav');
     $http.get('/api/chat')
         .success(function (res) {
+            if(res.error){
+                toast(res.error);
+            }
             for(var i = 0; i < res.length; i++){
                 if(res[i].sender.id == $scope.token.id) res[i].sender.name = "You";
             }
-            if(!res.error) $scope.messages = res;
-            else console.log(res.error); //toast(res.error);
+            $scope.messages = res;
         });
     $scope.submit = function(){
         var m = $scope.message;

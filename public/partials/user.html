@@ -1,0 +1,14 @@
+<div class="user">
+    <div class="username">{{user.name}}</div>
+    <div class="usertitle">Truck Guy</div>
+    Total Hours: {{user.hours.other + user.hours.group}}
+    <progress max="40" value="{{user.hours.other + user.hours.group}}"></progress>
+    <br>Group Hours: {{user.hours.group}}
+    <br>
+    <progress max="10" value="{{user.hours.group}}"></progress>
+    <div class="contact"><a href="mailto:{{user.email}}">Contact me</a></div>
+</div>
+<div class="event" ng-repeat="x in events">
+    <div class="eventTitle">{{x.title}}</div>
+    {{x.description}}
+</div>
