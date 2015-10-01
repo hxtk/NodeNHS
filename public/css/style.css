@@ -73,12 +73,9 @@ body {
       border-bottom: 3px solid orange; }
 
 #search {
-  /*  position: absolute;
-    top: 5px;
-    left: calc(50% - 200px);*/
   position: relative;
   top: 5px;
-  left: 0;
+  left: 5px;
   float: left;
   z-index: 2;
   display: inline-block;

@@ -222,5 +222,12 @@ app.controller('chatCtl', ['$scope', '$http', '$sce', 'socket', 'toast', 'markd'
 }]);
 
 app.controller('userCtl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+    $http.get('/api/user/' + $routeParams.id)
+        .success(function(res){
+            $scope.user = res;
+            $scope.events = [];
+            for(var i = 0; i < user.groups.length; i++){
 
+            }
+        });
 }]);
