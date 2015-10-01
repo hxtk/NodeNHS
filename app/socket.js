@@ -29,7 +29,8 @@ module.exports = function(io,models,KEY){
                         console.log(err);
                         return socket.emit('toast', {
                             type:'info',
-                            msg:'database error<br>your message was not saved'
+                            msg:'database error<br>your message was not saved',
+                            createdAt: Date.now()
                         });
                     }
                 });
