@@ -7,7 +7,7 @@ function ready(fn) {
 }
 
 function reheight(el,h){
-    style.height = h;
+    el.style.height = h;
 }
 
 ready(function() {
