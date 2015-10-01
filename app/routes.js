@@ -195,7 +195,7 @@ module.exports = function(app,models,KEY){
                 res.json({name:"Error",title:"Database connection failed"});
                 return console.log(e);
             }
-            if(u===undefined){
+            if(u===undefined || u===null){
                 res.json({name:"Error",title:"User not found"});
                 return console.log("User id: "+id+"\nUser not found");
             }
