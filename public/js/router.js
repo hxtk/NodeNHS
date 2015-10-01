@@ -158,7 +158,7 @@ nhs.run( function($rootScope, $location) {
         if(testStr.indexOf('/',1) > 0) testStr = testStr.substring(0,testStr.indexOf('/',1));
 
         if(plist[p].indexOf(testStr) == -1){
-            humane("You don't have permission to do that.");
+            humane.log("You don't have permission to do that.");
             $location.path(plist[p][0]);
         }
     });
