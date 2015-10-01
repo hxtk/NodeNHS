@@ -183,7 +183,7 @@ module.exports = function(app,models,KEY){
             });
             return;
         }
-        if(!req.param.id){
+        if(req.param.id===undefined){
             res.json({name:"Error",title:"No ID found in request"});
         }
         if(!req.param.id.match(/^[0-9a-z]{24}$/i)){
