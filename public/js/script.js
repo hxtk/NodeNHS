@@ -15,7 +15,6 @@ ready(function() {
         this.parentNode.style.height = 'auto';
     };
     document.querySelector("#search input").onblur = function () {
-        var hei = this.parentNode.
         window.setTimeout(reheight(this.parentNode,'46px'),5);
     };
 });
