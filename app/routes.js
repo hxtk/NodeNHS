@@ -174,7 +174,7 @@ module.exports = function(app,models,KEY){
 
     // User Text Routes
     app.get('/api/user/:id',function(req,res){
-        if(!req.user){
+        if(req.user===undefined){
             res.json({
                 error: {
                     type: 'error',
@@ -195,14 +195,13 @@ module.exports = function(app,models,KEY){
                 res.json({name:"Error",title:"Database connection failed"});
                 return console.log(e);
             }
-            if(!u){
+            if(u===undefined){
                 res.json({name:"Error",title:"User not found"});
                 return console.log("User id: "+id+"\nUser not found");
             }
             var answer = {
                 name: u.name,
                 title: u.title,
-                descr: u.descr,
                 hours: u.hours,
                 groups: u.group
             };
