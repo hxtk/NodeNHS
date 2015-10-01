@@ -205,9 +205,8 @@ module.exports = function(app,models,KEY){
                 hours: u.hours,
                 groups: u.group
             };
-            if(u.mailpub){
-                answer.mail = {addr: "mailto:"+u.email, text: "Send Message"};
-            }else{ answer.mail = {addr:"javascript:;}", text:"Private"}; }
+            if(u.mailpub)
+                answer.email = u.email;
             res.json(answer);
         });
     });
