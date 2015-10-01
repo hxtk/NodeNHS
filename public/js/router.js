@@ -130,25 +130,25 @@ nhs.run( function($rootScope, $location) {
             '/news',
             '/u',
             '/chat',
-            '/g'
+            '/group'
         ],
         [
             '/news',
             '/u',
             '/chat',
-            '/g'
+            '/group'
         ],
         [
             '/news',
             '/u',
             '/chat',
-            '/g'
+            '/group'
         ],
         [
             '/news',
             '/u',
             '/chat',
-            '/g'
+            '/group'
         ]
     ];
     // register listener to watch route changes
@@ -158,7 +158,8 @@ nhs.run( function($rootScope, $location) {
         if(testStr.indexOf('/',1) > 0) testStr = testStr.substring(0,testStr.indexOf('/',1));
 
         if(plist[p].indexOf(testStr) == -1){
-            humane.log("You don't have permission to do that.");
+            humane.error = humane.spawn({ addnCls: 'humane-flatty-error', timeout: 1000 })
+            humane.error("You don't have permission to do that.");
             $location.path(plist[p][0]);
         }
     });
