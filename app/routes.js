@@ -183,14 +183,13 @@ module.exports = function(app,models,KEY){
             });
             return;
         }
-        console.log(req.param);
-        if(req.param.id===undefined){
+        if(req.params.id===undefined){
             res.json({name:"Error",title:"No ID found in request"});
         }
-        if(!req.param.id.match(/^[0-9a-z]{24}$/i)){
+        if(!req.params.id.match(/^[0-9a-z]{24}$/i)){
             res.json({name:"Error",title:"Malformed ID"});
         }
-        var id = mongoose.Types.ObjectId.createFromHexString(req.param.id);
+        var id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
         models.Users.findOne({"_id":id}).exec(function(e,u){
             if(e){
                 res.json({name:"Error",title:"Database connection failed"});
