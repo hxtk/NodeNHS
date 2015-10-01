@@ -99,7 +99,7 @@ nhs.config(function($routeProvider){
         .when('/',routes.news)
         .when('/news',routes.news)
         .when('/group',routes.group)
-        .when('/u/:param',routes.user)
+        .when('/u/:id',routes.user)
         .when('/chat',routes.chat)
         .when('/login',routes.login)
         .when('/register',routes.register)
@@ -158,8 +158,7 @@ nhs.run( function($rootScope, $location) {
         if(testStr.indexOf('/',1) > 0) testStr = testStr.substring(0,testStr.indexOf('/',1));
 
         if(plist[p].indexOf(testStr) == -1){
-            //TODO: make toast notifications
-            //toast({type:'warn',title:'Auth Error',msg:"You don't have permission to do that!"});
+            humane("You don't have permission to do that.");
             $location.path(plist[p][0]);
         }
     });
