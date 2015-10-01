@@ -30,7 +30,7 @@ module.exports = function(io,models,KEY){
                         return socket.emit('toast', {
                             type:'info',
                             msg:'database error<br>your message was not saved',
-                            createdAt: Date.now()
+                            createdAt: Date.now() // This is necessary because of a race condition in the database
                         });
                     }
                 });
