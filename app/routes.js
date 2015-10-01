@@ -1,7 +1,7 @@
 // Auth
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
-
+var mongoose = require('mongoose');
 // Document Rendering
 var marked = require('marked');
 marked.setOptions({
