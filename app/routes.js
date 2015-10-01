@@ -183,6 +183,7 @@ module.exports = function(app,models,KEY){
             });
             return;
         }
+        console.log(req.param);
         if(req.param.id===undefined){
             res.json({name:"Error",title:"No ID found in request"});
         }

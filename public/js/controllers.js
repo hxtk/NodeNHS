@@ -226,8 +226,5 @@ app.controller('userCtl', ['$scope', '$http', '$routeParams', function($scope, $
         .success(function(res){
             $scope.user = res;
             $scope.events = [];
-            for(var i = 0; i < user.groups.length; i++){
-
-            }
         });
 }]);
