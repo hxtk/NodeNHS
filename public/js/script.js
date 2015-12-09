@@ -16,9 +16,6 @@ function isDescendant(el,q){
 }
 
 ready(function() {
-    document.getElementById("input").onblur = function(){
-        document.getElementById("input").value = "";
-    }
     document.onclick = function(e){
         if(isDescendant(e.target,document.getElementById("search"))){
             reheight(document.getElementById("search"),'auto');
@@ -26,5 +23,4 @@ ready(function() {
             reheight(document.getElementById("search"),'46px');
         }
     }
-
 });
