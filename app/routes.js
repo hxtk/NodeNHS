@@ -184,10 +184,10 @@ module.exports = function(app,models,KEY){
             return;
         }
         if(req.params.id===undefined){
-            res.json({name:"Error",title:"No ID found in request"});
+            res.json({name:"Error",title:"User not found"});
         }
         if(!req.params.id.match(/^[0-9a-z]{24}$/i)){
-            res.json({name:"Error",title:"Malformed ID"});
+            res.json({name:"Error",title:"User not found"});
         }
         var id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
         models.Users.findOne({"_id":id}).exec(function(e,u){
@@ -265,14 +265,12 @@ module.exports = function(app,models,KEY){
         res.setHeader('X-Content-Type-Options','nosniff');
     });
 
- root
-
 
     // Auth Routes
     app.post('/auth/token', function(req, res){
         models.Users.findOne({email: req.body.email}).exec(function(err,user){
             if(err){ res.json({error:"Database Call failed"}); return console.log(err); }
-            if(!user){
+            if(user===undefined){
                 res.json({error:"User not found"}); return;
             }
             bcrypt.compare(req.body.password, user.password, function(e, r){
