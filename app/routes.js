@@ -16,7 +16,7 @@ marked.setOptions({
 
 var transporter = nodemailer.createTransport({
     service: "Gmail",
-    auth: JSON.parse(fs.readFileSync("../../keys/email.json"))
+    auth: JSON.parse(fs.readFileSync("/var/www/cchs-nhs.com/keys/email.json"))
 });
 
 module.exports = function(app,models,KEY){
