@@ -90,7 +90,7 @@ app.controller('mainCtl', ['$http', '$scope', '$rootScope', function($http, $sco
 }]);
 
 app.controller('logCtl', ['$http', '$scope', '$rootScope', '$routeParams', 'toast', function($http,$scope,$rootScope,$routeParams,toast){
-    if($rootScope.token != undefined) location.assign('#/'+$rootScope.plist[$rootScope.token.perms][0]);
+    if($rootScope.token != undefined) location.assign('#'+$rootScope.plist[$rootScope.token.perms][0]);
     $scope.log_in = function(){
         $http.post('/auth/token', {email:$scope.email,password:$scope.password,token:$routeParams.token})
             .success(function(data, status, headers, config) {
