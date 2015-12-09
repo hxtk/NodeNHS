@@ -96,6 +96,9 @@ app.controller('logCtl', ['$http', '$scope', '$rootScope', 'toast', function($ht
                 if(data.error){
                     toast({type:'error',msg:data.error});
                     return;
+                }else if(data.info){
+                    toast({type: 'info', msg:data.info});
+                    return;
                 }
                 localStorage.setItem('token',data.token);
                 if($rootScope.goto) location.assign($rootScope.goto);
