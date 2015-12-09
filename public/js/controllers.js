@@ -102,7 +102,7 @@ app.controller('logCtl', ['$http', '$scope', '$rootScope', '$routeParams', 'toas
                     return;
                 }
                 localStorage.setItem('token',data.token);
-                location.assign('/#/news');
+                location.assign('/#/');
 
             })
             .error(function(data, status, headers, config) {
@@ -143,13 +143,12 @@ app.controller('registerCtl', ['$http', '$scope', '$rootScope', 'toast', functio
                     toast(data.error);
                     return;
                 }
-                console.log(data);
                 localStorage.setItem('token',data.token);
-                location.reload();
+                location.replace('/#/');
 
             })
             .error(function(data, status, headers, config) {
-                toast({type:'info',msg:'something went wrong!'});
+                toast({type:'info',msg:'Server unavailable'});
             });
     };
 }]);
