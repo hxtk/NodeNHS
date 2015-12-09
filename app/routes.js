@@ -262,7 +262,7 @@ module.exports = function(app,models,KEY){
             if(err != undefined){
                 console.log(err);
             }
-            console.log("Message sent: " + info);
+            console.log("Message sent to " + maildata.to);
         });
 
         nUser.save(function(err) {
