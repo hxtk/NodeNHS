@@ -104,6 +104,7 @@ app.controller('logCtl', ['$http', '$scope', '$rootScope', 'toast', function($ht
             })
             .error(function(data, status, headers, config) {
                 toast({type:'info',msg:'Something went wrong!'});
+                console.log(data + '\n' + status + '\n' + headers + '\n' + config);
             });
     };
 }]);
