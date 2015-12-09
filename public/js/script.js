@@ -14,10 +14,6 @@ ready(function() {
     document.querySelector("#search input").onfocus = function () {
         this.parentNode.style.height = 'auto';
     };
-
-    document.getElementById('search').onclick = function(){
-        return false;
-    };
     document.body.onclick = function(){
         reheight(document.getElementbyId("search"),'46px');
     };
