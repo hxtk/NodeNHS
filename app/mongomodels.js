@@ -38,7 +38,8 @@ var us = new Schema({
     title: {type: String, default: "Member"},
     group: [Schema.Types.ObjectId],
     mailpub: {type:Boolean, default:true},
-    token: String,
+    token: {type: String, required: true},
+    verified: {type:Boolean, default:false},
     createdAt: {type:Date,expires:94608000,default:Date.now()}
 });
 

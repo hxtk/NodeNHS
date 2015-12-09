@@ -1,13 +1,22 @@
 // Auth
 var bcrypt = require('bcrypt-nodejs');
+var uuid = require('uuid');
 var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
+var nodemailer = require('nodemailer');
+var fs = require('fs');
+
 // Document Rendering
 var marked = require('marked');
 marked.setOptions({
     sanitize : true,
     smartypants : true
 
+});
+
+var transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: JSON.parse(fs.readFileSync("../../keys/email.json"))
 });
 
 module.exports = function(app,models,KEY){
@@ -220,12 +229,40 @@ module.exports = function(app,models,KEY){
             });
             return;
         }
+        models.Users.findOne({email: req.body.email}).exec(function(err,user){
+            if(err){ res.json({error:"Server unavailable; Please try again later or contact the webmster."}); return console.log(err); }
+            if(user != undefined){
+                res.json({error:"User already exists. Did you forget your password?"}); return;
+            }
+        });
+
         var nUser = new models.Users({
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password),
             name: req.body.name,
-            year: req.body.year
+            year: req.body.year,
+            token: uuid.v4()
         });
+
+        var maildata = {
+            from: "CCHS National Honor Society",
+            to: nUser.email,
+            subject: "Please Verify Your Account",
+            text: "Please click the following link to complete your registration.\n" +
+                  "If the link is unavailable, copy and paste it into your address bar.\n" +
+                  "https://cchs-nhs.com/#/login/"+nUser.token,
+            html: "Please click the following link to complete your registration.\n" +
+                  "If the link is unavailable, copy and paste it into your address bar.\n" +
+                  '<a href="https://cchs-nhs.com/#/login/'+nUser.token+'">https://cchs-nhs.com/#/login/'+nUser.token+'</a>'
+        };
+
+        transporter.sendMail(maildata,function(err,info){
+            if(error){
+                console.log(error);
+            }
+            console.log("Message sent: " + info);
+        });
+
         nUser.save(function(err) {
                 if (err) {
                     console.log(err);
@@ -246,7 +283,7 @@ module.exports = function(app,models,KEY){
             };
             var token = jwt.sign(profile, KEY, {expiresInMinutes: 60 * 48});
             res.json({token: token});
-            });
+        });
     });
     app.put('/api/user/:id',function(req,res){
 
