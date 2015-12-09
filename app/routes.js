@@ -234,7 +234,7 @@ module.exports = function(app,models,KEY){
             console.log(err);
             console.log(user);
             if(err){ res.json({error:"Server unavailable; Please try again later or contact the webmster."}); return console.log(err); }
-            if(user != undefined){
+            if(user != null){
                 console.log("User found");
                 res.json({error:"User already exists. Did you forget your password?"}); return;
             }
@@ -273,9 +273,10 @@ module.exports = function(app,models,KEY){
                     res.json({
                         error: {
                             type: 'error',
-                            msg: 'something went wrong!'
+                            msg: 'server unavailable'
                         }
                     });
+                    return;
                 }
             var profile = {
                 id: nUser._id,
