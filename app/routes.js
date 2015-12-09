@@ -257,7 +257,7 @@ module.exports = function(app,models,KEY){
         };
 
         transporter.sendMail(maildata,function(err,info){
-            if(error){
+            if(error != undefined){
                 console.log(error);
             }
             console.log("Message sent: " + info);
