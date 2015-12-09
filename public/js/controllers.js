@@ -26,7 +26,7 @@ app.factory('socket', function ($rootScope) {
     };
 });
 app.factory('toast', function(){
-    humane.info = humane.spawn({ addnCls: 'humane-flatty-info', timeout: 1000 });
+    humane.info = humane.spawn({ addnCls: 'humane-flatty-info', timeout: 5000 });
     humane.error = humane.spawn({addnCls: 'humane-flatty-error',timeout: 2000 });
     return function(data){
         if(!data.type){
