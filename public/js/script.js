@@ -9,13 +9,19 @@ function ready(fn) {
 function reheight(el,h){
     el.style.height = h;
 }
+function isDescendant(el,q){
+    if(el == null) return false;
+    if(el == q) return true;
+    return isDescendant(el.parentNode,q);
+}
 
 ready(function() {
-    document.querySelector("#search input").onfocus = function () {
-        this.parentNode.style.height = 'auto';
-    };
-    document.body.onclick = function(){
-        reheight(document.getElementbyId("search"),'46px');
-    };
+    document.onclick = function(e){
+        if(isDescendant(e.target,document.getElementById("search"))){
+            reheight(document.getElementById("search"),'auto');
+        }else{
+            reheight(document.getElementById("search"),'46px');
+        }
+    }
 
 });
