@@ -19,6 +19,8 @@ var transporter = nodemailer.createTransport({
     auth: JSON.parse(fs.readFileSync("/var/www/cchs-nhs.com/keys/email.json"))
 });
 
+var cert =
+
 module.exports = function(app,models,KEY){
 
     app.get('/',function(req, res){
@@ -50,7 +52,7 @@ module.exports = function(app,models,KEY){
             if(err){
                 var answer = [{
                     title: "Error",
-                    body: "Database query failed"
+                    body: "Server unavailable."
                 }];
                 res.json(answer);
                 console.log(err);
@@ -62,14 +64,12 @@ module.exports = function(app,models,KEY){
         if(!req.user){
             res.json({
                 type:'error',
-                title: 'Unauthorized',
                 msg: 'You have to be logged in for that!'
             })
         }
         if(req.user.perms < 2){
             res.json({
                 type:'error',
-                title:'Unauthorized',
                 msg:"You don't have permission to do that!"
             });
         }else{
@@ -84,8 +84,7 @@ module.exports = function(app,models,KEY){
                     if(err){
                         res.json({
                             type:"error",
-                            title:"Database Error",
-                            msg:"Saving to database failed; please try again later"
+                            msg:"Server unavailable"
                         });
                     }
                 });
@@ -95,7 +94,6 @@ module.exports = function(app,models,KEY){
         if(!req.user){
             res.json({
                 type:'error',
-                title: 'Unauthorized',
                 msg: 'You have to be logged in for that!'
             });
             return;
@@ -133,7 +131,6 @@ module.exports = function(app,models,KEY){
         if(!req.user){
             res.json({
                 type:'error',
-                title: 'Unauthorized',
                 msg: 'You have to be logged in for that!'
             });
             return;
@@ -141,7 +138,6 @@ module.exports = function(app,models,KEY){
         if(req.user.perms < 2){
             res.json({
                 type:'error',
-                title:'Unauthorized',
                 msg:"You don't have permission to do that!"
             });
             return;
@@ -152,8 +148,7 @@ module.exports = function(app,models,KEY){
                 console.log(err);
                 res.json({
                     type: 'error',
-                    title: 'Database',
-                    msg: 'Deleting failed!'
+                    msg: 'Server unavailable'
                 });
             }
         });

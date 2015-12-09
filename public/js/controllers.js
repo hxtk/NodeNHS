@@ -90,8 +90,8 @@ app.controller('mainCtl', ['$http', '$scope', '$rootScope', function($http, $sco
 }]);
 
 app.controller('logCtl', ['$http', '$scope', '$rootScope', '$routeParams', 'toast', function($http,$scope,$rootScope,$routeParams,toast){
+    if($rootScope.token != undefined) location.assign('#/'+$rootScope.plist[$rootScope.token.perms][0]);
     $scope.log_in = function(){
-        console.log($routeParams.token);
         $http.post('/auth/token', {email:$scope.email,password:$scope.password,token:$routeParams.token})
             .success(function(data, status, headers, config) {
                 if(data.error){
@@ -102,7 +102,6 @@ app.controller('logCtl', ['$http', '$scope', '$rootScope', '$routeParams', 'toas
                     return;
                 }
                 localStorage.setItem('token',data.token);
-                location.assign('/#/');
                 location.reload();
 
             })
@@ -114,6 +113,7 @@ app.controller('logCtl', ['$http', '$scope', '$rootScope', '$routeParams', 'toas
 }]);
 
 app.controller('registerCtl', ['$http', '$scope', '$rootScope', 'toast', function($http,$scope,$rootScope,toast){
+    if($rootScope.token != undefined) location.assign('#/'+$rootScope.plist[$rootScope.token.perms][0]);
     $scope.register = function(){
         if(!$scope.name || !$scope.email || !$scope.cemail || !$scope.password || !$scope.cpassword || !$scope.year){
             toast({type:'info',msg:'must fill in all fields'});
@@ -145,7 +145,6 @@ app.controller('registerCtl', ['$http', '$scope', '$rootScope', 'toast', functio
                     return;
                 }
                 localStorage.setItem('token',data.token);
-                location.assign('/#/');
                 location.reload();
 
             })

@@ -143,27 +143,44 @@ nhs.run( function($rootScope, $location) {
             '/news',
             '/u',
             '/chat',
-            '/group'
+            '/group',
+            '/login',
+            '/register',
+            '/verify',
+            '/reset'
         ],
         [
             '/news',
             '/u',
             '/chat',
-            '/group'
+            '/group',
+            '/login',
+            '/register',
+            '/verify',
+            '/reset'
         ],
         [
             '/news',
             '/u',
             '/chat',
-            '/group'
+            '/group',
+            '/login',
+            '/register',
+            '/verify',
+            '/reset'
         ],
         [
             '/news',
             '/u',
             '/chat',
-            '/group'
+            '/group',
+            '/login',
+            '/register',
+            '/verify',
+            '/reset'
         ]
     ];
+    $rootScope.plist = plist;
     // register listener to watch route changes
     $rootScope.$on( "$routeChangeStart", function(event, next, current) {
 
