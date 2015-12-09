@@ -309,13 +309,8 @@ module.exports = function(app,models,KEY){
     app.post('/auth/token', function(req, res){
         models.Users.findOne({email: req.body.email}).exec(function(err,user){
             if(err){ res.json({error:"Server unavailable"}); return console.log(err); }
-            console.log(user);
             if(user===undefined || user === null){
                 res.json({error:"User not found"}); return;
-            }
-            if(user.token === undefined || user.token === null){
-                user.token = uuid.v4();
-                user.save();
             }
 
             bcrypt.compare(req.body.password, user.password, function(e, r){
