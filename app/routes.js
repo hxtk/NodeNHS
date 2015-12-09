@@ -230,8 +230,10 @@ module.exports = function(app,models,KEY){
             return;
         }
         models.Users.findOne({email: req.body.email}).exec(function(err,user){
+            console.log("Checking for other users at that email");
             if(err){ res.json({error:"Server unavailable; Please try again later or contact the webmster."}); return console.log(err); }
             if(user != undefined){
+                console.log("User found");
                 res.json({error:"User already exists. Did you forget your password?"}); return;
             }
         });
@@ -304,7 +306,7 @@ module.exports = function(app,models,KEY){
 
 
     // Auth Routes
-    app.post('/auth/token/:token', function(req, res){
+    app.post('/auth/token', function(req, res){
         models.Users.findOne({email: req.body.email}).exec(function(err,user){
             if(err){ res.json({error:"Server unavailable"}); return console.log(err); }
             if(user===undefined){
@@ -320,7 +322,7 @@ module.exports = function(app,models,KEY){
                 if(r) {
 
                     if(!user.verified){
-                        if(req.param.token === undefined){
+                        if(req.body.token === undefined){
                             res.json({
                                 info:"You haven't verified your account yet. Please check your email.<br>"+
                                 "Can't find the email? Check your spam box.<br>"+
@@ -339,46 +341,6 @@ module.exports = function(app,models,KEY){
                             });
                         }
 
-                    }
-
-                    var profile = {
-                        id: user._id,
-                        email: user.email,
-                        name: user.name,
-                        hours: user.hours,
-                        perms: user.perms,
-                        title: user.title
-                    };
-                    var token = jwt.sign(profile, KEY, {expiresInMinutes: 60 * 48});
-                    res.json({token: token});
-                }else{
-                    res.json({error:"Incorrect password"});
-                }
-            });
-        });
-    });
-    app.post('/auth/token', function(req, res){
-        models.Users.findOne({email: req.body.email}).exec(function(err,user){
-            if(err){ res.json({error:"Server unavailable"}); return console.log(err); }
-            if(user===undefined){
-                res.json({error:"User not found"}); return;
-            }
-            if(user.token === undefined){
-                user.token = uuid.v4();
-                user.save();
-            }
-
-            bcrypt.compare(req.body.password, user.password, function(e, r){
-                if(e) return console.log(e);
-                if(r) {
-
-                    if(!user.verified){
-                        res.json({
-                            info:"You haven't verified your account yet. Please check your email.<br>"+
-                            "Can't find the email? Check your spam box.<br>"+
-                            'Still missing? Click <a href="#/verify">here</a> to resend verification email.'
-                        });
-                        return;
                     }
 
                     var profile = {

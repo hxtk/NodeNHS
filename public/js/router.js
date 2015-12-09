@@ -93,6 +93,14 @@ nhs.config(function($routeProvider){
         register : {
             templateUrl : 'partials/register.html',
             controller : 'registerCtl'
+        },
+        verify : {
+            templateUrl : 'partials/verify.html',
+            controller : 'verifyCtl'
+        },
+        reset : {
+            templateUrl : 'partials/reset.html',
+            controller : 'resetCtl'
         }
     };
     $routeProvider
@@ -102,7 +110,10 @@ nhs.config(function($routeProvider){
         .when('/u/:id',routes.user)
         .when('/chat',routes.chat)
         .when('/login',routes.login)
+        .when('/login/:token',routes.login)
         .when('/register',routes.register)
+        .when('/verify',routes.verify)
+        .when('/reset',routes.reset)
 });
 
 nhs.run(function($rootScope,$http,jwtHelper){
@@ -120,11 +131,13 @@ nhs.run(function($rootScope,$http,jwtHelper){
 
 nhs.run( function($rootScope, $location) {
     var p = $rootScope.token.perms;
-    plist = [
+    var plist = [
         [
             '/login',
             '/news',
-            '/register'
+            '/register',
+            '/verify',
+            '/reset'
         ],
         [
             '/news',

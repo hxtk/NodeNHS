@@ -89,9 +89,9 @@ app.controller('mainCtl', ['$http', '$scope', '$rootScope', function($http, $sco
     }
 }]);
 
-app.controller('logCtl', ['$http', '$scope', '$rootScope', 'toast', function($http,$scope,$rootScope,toast){
+app.controller('logCtl', ['$http', '$scope', '$rootScope', '$routeParams', 'toast', function($http,$scope,$rootScope,$routeParams,toast){
     $scope.log_in = function(){
-        $http.post('/auth/token', {email:$scope.email,password:$scope.password})
+        $http.post('/auth/token', {email:$scope.email,password:$scope.password,token:$routeParams.token})
             .success(function(data, status, headers, config) {
                 if(data.error){
                     toast({type:'error',msg:data.error});
@@ -101,13 +101,12 @@ app.controller('logCtl', ['$http', '$scope', '$rootScope', 'toast', function($ht
                     return;
                 }
                 localStorage.setItem('token',data.token);
-                if($rootScope.goto) location.assign($rootScope.goto);
-                else location.reload();
+                location.assign('/#/news');
 
             })
             .error(function(data, status, headers, config) {
-                toast({type:'info',msg:'Something went wrong!'});
-                console.log(data + '\n' + status + '\n' + headers + '\n' + config);
+                toast({type:'info',msg:'Server unavailable'});
+                console.log(data + '\n' + status);
             });
     };
 }]);
