@@ -333,6 +333,10 @@ module.exports = function(app,models,KEY){
                             user.verified = true;
                             user.token = uuid.v4();
                             user.save();
+                        }else{
+                            res.json({
+                                info: 'That token has expired. Click <a href="#/verify">here</a> to resend verification email.'
+                            });
                         }
 
                     }
