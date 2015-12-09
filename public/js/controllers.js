@@ -91,6 +91,7 @@ app.controller('mainCtl', ['$http', '$scope', '$rootScope', function($http, $sco
 
 app.controller('logCtl', ['$http', '$scope', '$rootScope', '$routeParams', 'toast', function($http,$scope,$rootScope,$routeParams,toast){
     $scope.log_in = function(){
+        console.log($routeParams.token);
         $http.post('/auth/token', {email:$scope.email,password:$scope.password,token:$routeParams.token})
             .success(function(data, status, headers, config) {
                 if(data.error){

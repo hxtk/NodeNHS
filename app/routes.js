@@ -309,6 +309,7 @@ module.exports = function(app,models,KEY){
     app.post('/auth/token', function(req, res){
         models.Users.findOne({email: req.body.email}).exec(function(err,user){
             if(err){ res.json({error:"Server unavailable"}); return console.log(err); }
+            console.log(user);
             if(user===undefined){
                 res.json({error:"User not found"}); return;
             }
