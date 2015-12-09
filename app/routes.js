@@ -230,44 +230,47 @@ module.exports = function(app,models,KEY){
             return;
         }
         models.Users.findOne({email: req.body.email}).exec(function(err,user){
-            console.log("Checking for other users at that email");
-            console.log(err);
-            console.log(user);
+            console.log("Checking for other users at " + req.body.email);
             if(err){ res.json({error:"Server unavailable; Please try again later or contact the webmster."}); return console.log(err); }
             if(user != null){
                 console.log("User found");
-                res.json({error:"User already exists. Did you forget your password?"}); return;
+                res.json({
+                    error:{
+                        type: "error",
+                        msg: "User already exists. Did you forget your password?"
+                    }
+                });
+                return;
             }
-        });
 
-        var nUser = new models.Users({
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password),
-            name: req.body.name,
-            year: req.body.year,
-            token: uuid.v4()
-        });
+            var nUser = new models.Users({
+                email: req.body.email,
+                password: bcrypt.hashSync(req.body.password),
+                name: req.body.name,
+                year: req.body.year,
+                token: uuid.v4()
+            });
 
-        var maildata = {
-            from: "CCHS National Honor Society",
-            to: nUser.email,
-            subject: "Please Verify Your Account",
-            text: "Please click the following link to complete your registration.\n" +
-                  "If the link is unavailable, copy and paste it into your address bar.\n" +
-                  "https://cchs-nhs.com/#/login/"+nUser.token,
-            html: "Please click the following link to complete your registration.\n" +
-                  "If the link is unavailable, copy and paste it into your address bar.\n" +
-                  '<a href="https://cchs-nhs.com/#/login/'+nUser.token+'">https://cchs-nhs.com/#/login/'+nUser.token+'</a>'
-        };
+            var maildata = {
+                from: "CCHS National Honor Society",
+                to: nUser.email,
+                subject: "Please Verify Your Account",
+                text: "Please click the following link to complete your registration.\n" +
+                "If the link is unavailable, copy and paste it into your address bar.\n" +
+                "https://cchs-nhs.com/#/login/"+nUser.token,
+                html: "Please click the following link to complete your registration.\n" +
+                "If the link is unavailable, copy and paste it into your address bar.\n" +
+                '<a href="https://cchs-nhs.com/#/login/'+nUser.token+'">https://cchs-nhs.com/#/login/'+nUser.token+'</a>'
+            };
 
-        transporter.sendMail(maildata,function(err,info){
-            if(err != undefined){
-                console.log(err);
-            }
-            console.log("Message sent to " + maildata.to);
-        });
+            transporter.sendMail(maildata,function(err,info){
+                if(err != undefined){
+                    console.log(err);
+                }
+                console.log("Message sent to " + maildata.to);
+            });
 
-        nUser.save(function(err) {
+            nUser.save(function(err) {
                 if (err) {
                     console.log(err);
                     res.json({
@@ -278,17 +281,20 @@ module.exports = function(app,models,KEY){
                     });
                     return;
                 }
-            var profile = {
-                id: nUser._id,
-                email: nUser.email,
-                name: nUser.name,
-                hours: nUser.hours,
-                perms: nUser.perms,
-                title: nUser.title
-            };
-            var token = jwt.sign(profile, KEY, {expiresInMinutes: 60 * 48});
-            res.json({token: token});
+                var profile = {
+                    id: nUser._id,
+                    email: nUser.email,
+                    name: nUser.name,
+                    hours: nUser.hours,
+                    perms: nUser.perms,
+                    title: nUser.title
+                };
+                var token = jwt.sign(profile, KEY, {expiresInMinutes: 60 * 48});
+                res.json({token: token});
+            });
+
         });
+
     });
     app.put('/api/user/:id',function(req,res){
 
