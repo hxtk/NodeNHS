@@ -231,6 +231,8 @@ module.exports = function(app,models,KEY){
         }
         models.Users.findOne({email: req.body.email}).exec(function(err,user){
             console.log("Checking for other users at that email");
+            console.log(err);
+            console.log(user);
             if(err){ res.json({error:"Server unavailable; Please try again later or contact the webmster."}); return console.log(err); }
             if(user != undefined){
                 console.log("User found");

@@ -103,6 +103,7 @@ app.controller('logCtl', ['$http', '$scope', '$rootScope', '$routeParams', 'toas
                 }
                 localStorage.setItem('token',data.token);
                 location.assign('/#/');
+                location.reload();
 
             })
             .error(function(data, status, headers, config) {
@@ -145,6 +146,7 @@ app.controller('registerCtl', ['$http', '$scope', '$rootScope', 'toast', functio
                 }
                 localStorage.setItem('token',data.token);
                 location.assign('/#/');
+                location.reload();
 
             })
             .error(function(data, status, headers, config) {
