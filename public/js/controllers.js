@@ -191,7 +191,6 @@ app.controller('chatCtl', ['$scope', '$http', '$sce', 'socket', 'toast', 'markd'
         var m = $scope.message;
         if(m != '') {
             $scope.message = '';
-            console.log(markd(m));
             $scope.messages.unshift({
                 sender: {
                     name: "You",
