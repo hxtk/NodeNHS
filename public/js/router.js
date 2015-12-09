@@ -133,6 +133,7 @@ nhs.run( function($rootScope, $location) {
     var p = $rootScope.token.perms;
     var plist = [
         [
+            '/',
             '/login',
             '/news',
             '/register',
@@ -140,16 +141,7 @@ nhs.run( function($rootScope, $location) {
             '/reset'
         ],
         [
-            '/news',
-            '/u',
-            '/chat',
-            '/group',
-            '/login',
-            '/register',
-            '/verify',
-            '/reset'
-        ],
-        [
+            '/',
             '/news',
             '/u',
             '/chat',
@@ -160,6 +152,7 @@ nhs.run( function($rootScope, $location) {
             '/reset'
         ],
         [
+            '/',
             '/news',
             '/u',
             '/chat',
@@ -170,6 +163,18 @@ nhs.run( function($rootScope, $location) {
             '/reset'
         ],
         [
+            '/',
+            '/news',
+            '/u',
+            '/chat',
+            '/group',
+            '/login',
+            '/register',
+            '/verify',
+            '/reset'
+        ],
+        [
+            '/',
             '/news',
             '/u',
             '/chat',
