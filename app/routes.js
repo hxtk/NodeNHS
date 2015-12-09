@@ -304,15 +304,39 @@ module.exports = function(app,models,KEY){
 
 
     // Auth Routes
-    app.post('/auth/token', function(req, res){
+    app.post('/auth/token/:token', function(req, res){
         models.Users.findOne({email: req.body.email}).exec(function(err,user){
             if(err){ res.json({error:"Database Call failed"}); return console.log(err); }
             if(user===undefined){
                 res.json({error:"User not found"}); return;
             }
+            if(user.token === undefined){
+                user.token = uuid.v4();
+                user.save();
+            }
+
             bcrypt.compare(req.body.password, user.password, function(e, r){
                 if(e) return console.log(e);
                 if(r) {
+
+                    if(!user.verified){
+                        if(req.param.token === undefined){
+                            res.json({
+                                info:"You haven't verified your account yet. Please check your email.<br>"+
+                                "Can't find the email? Check your spam box.<br>"+
+                                'Still missing? Click <a href="#/verify">here</a> to resend verification email.'
+                            });
+                            return;
+                        }
+
+                        if(req.param.token == user.token){
+                            user.verified = true;
+                            user.token = uuid.v4();
+                            user.save();
+                        }
+
+                    }
+
                     var profile = {
                         id: user._id,
                         email: user.email,
