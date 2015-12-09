@@ -310,10 +310,10 @@ module.exports = function(app,models,KEY){
         models.Users.findOne({email: req.body.email}).exec(function(err,user){
             if(err){ res.json({error:"Server unavailable"}); return console.log(err); }
             console.log(user);
-            if(user===undefined){
+            if(user===undefined || user === null){
                 res.json({error:"User not found"}); return;
             }
-            if(user.token === undefined){
+            if(user.token === undefined || user.token === null){
                 user.token = uuid.v4();
                 user.save();
             }
