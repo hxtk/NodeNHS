@@ -332,6 +332,7 @@ module.exports = function(app,models,KEY){
                             user.token = uuid.v4();
                             user.save();
                         }else{
+                            console.log(req.param.token + "\n" + user.token + "\nNo match");
                             res.json({
                                 info: 'That token has expired. Click <a href="#/verify">here</a> to resend verification email.'
                             });

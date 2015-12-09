@@ -144,7 +144,7 @@ app.controller('registerCtl', ['$http', '$scope', '$rootScope', 'toast', functio
                     return;
                 }
                 localStorage.setItem('token',data.token);
-                location.replace('/#/');
+                location.assign('/#/');
 
             })
             .error(function(data, status, headers, config) {
