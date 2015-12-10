@@ -19,8 +19,6 @@ var transporter = nodemailer.createTransport({
     auth: JSON.parse(fs.readFileSync("/var/www/cchs-nhs.com/keys/email.json"))
 });
 
-var cert =
-
 module.exports = function(app,models,KEY){
 
     app.get('/',function(req, res){
@@ -290,6 +288,48 @@ module.exports = function(app,models,KEY){
 
         });
 
+    });
+    app.put('/api/user',function(req,res){
+        if(req.user === undefined || req.user === null){
+            res.json({
+                toast :{
+                    type: 'error',
+                    msg: 'You have to be logged in for that!'
+                }
+            });
+            return;
+        }
+        if(req.body.token != undefined){
+            var id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
+            models.Users.findOne({"_id":id}).exec(function(e,u) {
+                if (e) {
+                    res.json({name: "Error", title: "Server unavailable"});
+                    return console.log(e);
+                }
+                if (u === undefined || u === null) {
+                    res.json({name: "Error", title: "User not found"});
+                    return console.log("User id: " + id + "\nUser not found");
+                }
+                if(u.token == req.body.token){
+                    u.token = uuid.v4();
+                    u.verified = true;
+                    u.save();
+
+                    res.json({
+                        toast: {
+                            type:'success',
+                            msg:'Your email account has been successfully verified.'
+                        }
+                    });
+
+                }else{
+                    res.json({
+                        info: 'That token has expired. Click <a href="#/verify">here</a> to resend verification email.'
+                    });
+                    return;
+                }
+            });
+        }
     });
     app.put('/api/user/:id',function(req,res){
 

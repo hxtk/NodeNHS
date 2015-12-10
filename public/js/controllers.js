@@ -90,7 +90,17 @@ app.controller('mainCtl', ['$http', '$scope', '$rootScope', function($http, $sco
 }]);
 
 app.controller('logCtl', ['$http', '$scope', '$rootScope', '$routeParams', 'toast', function($http,$scope,$rootScope,$routeParams,toast){
-    if($rootScope.token.perms > 0) location.assign('#'+$rootScope.plist[$rootScope.token.perms]);
+    if($rootScope.token.perms > 0){
+
+        if($routeParams.token != undefined){
+            $http.put('/api/user', {token: $routeParams.token})
+                .success(function(data, status, headers, config){
+                    toast(data.toast);
+                });
+        }
+
+        location.assign('#/');
+    }
     $scope.log_in = function(){
         $http.post('/auth/token', {email:$scope.email,password:$scope.password,token:$routeParams.token})
             .success(function(data, status, headers, config) {
@@ -113,7 +123,7 @@ app.controller('logCtl', ['$http', '$scope', '$rootScope', '$routeParams', 'toas
 }]);
 
 app.controller('registerCtl', ['$http', '$scope', '$rootScope', 'toast', function($http,$scope,$rootScope,toast){
-    if($rootScope.token != undefined) location.assign('#/'+$rootScope.plist[$rootScope.token.perms]);
+    if($rootScope.token != undefined) location.assign('#/');
     $scope.register = function(){
         if(!$scope.name || !$scope.email || !$scope.cemail || !$scope.password || !$scope.cpassword || !$scope.year){
             toast({type:'info',msg:'must fill in all fields'});
