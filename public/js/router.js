@@ -192,15 +192,11 @@ nhs.run( function($rootScope, $location) {
     // register listener to watch route changes
     $rootScope.$on( "$routeChangeStart", function(event, next, current) {
 
-        if(location.hash = "" || location.hash == undefined || location.hash == null) location.hash = "/";
-        else{
-            var testStr = $location.path();
-            if(testStr.indexOf('/',1) > 0) testStr = testStr.substring(0,testStr.indexOf('/',1));
+        var testStr = $location.path();
+        if(testStr.indexOf('/',1) > 0) testStr = testStr.substring(0,testStr.indexOf('/',1));
 
-            if(plist[p].indexOf(testStr) == -1){
-                $location.path(plist[p][0]);
-            }
+        if(plist[p].indexOf(testStr) == -1){
+            $location.path(plist[p][0]);
         }
-
     });
 });
