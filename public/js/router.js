@@ -192,6 +192,8 @@ nhs.run( function($rootScope, $location) {
     // register listener to watch route changes
     $rootScope.$on( "$routeChangeStart", function(event, next, current) {
 
+        if(location.hash = "") location.hash = "/";
+
         var testStr = $location.path();
         if(testStr.indexOf('/',1) > 0) testStr = testStr.substring(0,testStr.indexOf('/',1));
 
