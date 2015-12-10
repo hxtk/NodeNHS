@@ -187,7 +187,7 @@ nhs.run( function($rootScope, $location) {
     ];
     $rootScope.plist = [];
     for(var i = 0; i < plist.length; i++)
-        $rootScope.push(plist[i][0]);
+        $rootScope.plist.push(plist[i][0]);
 
     // register listener to watch route changes
     $rootScope.$on( "$routeChangeStart", function(event, next, current) {
