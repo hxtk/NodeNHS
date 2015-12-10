@@ -133,8 +133,8 @@ nhs.run( function($rootScope, $location) {
     var p = $rootScope.token.perms;
     var plist = [
         [
-            '/',
             '/login',
+            '/',
             '/news',
             '/register',
             '/verify',
