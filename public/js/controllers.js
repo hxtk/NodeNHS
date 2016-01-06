@@ -104,11 +104,8 @@ app.controller('logCtl', ['$http', '$scope', '$rootScope', '$routeParams', 'toas
     $scope.log_in = function(){
         $http.post('/auth/token', {email:$scope.email,password:$scope.password,token:$routeParams.token})
             .success(function(data, status, headers, config) {
-                if(data.error){
-                    toast({type:'error',msg:data.error});
-                    return;
-                }else if(data.info){
-                    toast({type: 'info', msg:data.info});
+                if(data.toast){
+                    toast(data.toast);
                     return;
                 }
                 localStorage.setItem('token',data.token);
@@ -149,9 +146,8 @@ app.controller('registerCtl', ['$http', '$scope', '$rootScope', 'toast', functio
             year:$scope.year
         })
             .success(function(data, status, headers, config) {
-                if(data.error){
-                    console.log(data.error);
-                    toast(data.error);
+                if(data.toast){
+                    toast(data.toast);
                     return;
                 }
                 localStorage.setItem('token',data.token);
@@ -192,8 +188,8 @@ app.controller('chatCtl', ['$scope', '$http', '$sce', 'socket', 'toast', 'markd'
     $scope.ding = new Audio('/wav/ding.wav');
     $http.get('/api/chat')
         .success(function (res) {
-            if(res.error){
-                toast(res.error);
+            if(res.toast){
+                toast(res.toast);
             }
             for(var i = 0; i < res.length; i++){
                 res[i].message = $sce.trustAsHtml(res[i].message);
