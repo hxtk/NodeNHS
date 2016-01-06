@@ -61,14 +61,19 @@ module.exports = function(app,models,KEY){
     app.post('/api/news',function(req,res){
         if(!req.user){
             res.json({
-                type:'error',
-                msg: 'You have to be logged in for that!'
-            })
+                toast: {
+                    type: 'error',
+                    msg: 'You have to be logged in for that!'
+                }
+            });
+            return;
         }
         if(req.user.perms < 2){
             res.json({
-                type:'error',
-                msg:"You don't have permission to do that!"
+                toast:{
+                    type:'error',
+                    msg:"You don't have permission to do that!"
+                }
             });
         }else{
             new models.News({
@@ -81,8 +86,10 @@ module.exports = function(app,models,KEY){
             }).save(function(err){
                     if(err){
                         res.json({
-                            type:"error",
-                            msg:"Server unavailable"
+                            toast:{
+                                type:"error",
+                                msg:"Server unavailable"
+                            }
                         });
                     }
                 });
@@ -91,16 +98,19 @@ module.exports = function(app,models,KEY){
     app.put('/api/news/:id',function(req,res){
         if(!req.user){
             res.json({
-                type:'error',
-                msg: 'You have to be logged in for that!'
+                toast:{
+                    type:'error',
+                    msg: 'You have to be logged in for that!'
+                }
             });
             return;
         }
         if(req.user.perms < 2){
             res.json({
-                type:'error',
-                title:'Unauthorized',
-                msg:"You don't have permission to do that!"
+                toast:{
+                    type: 'error',
+                    msg: "You don't have permission to do that!"
+                }
             });
             return;
         }
@@ -117,9 +127,10 @@ module.exports = function(app,models,KEY){
                 if(err){
                     console.log(err);
                     res.json({
-                        type:"error",
-                        title:"Database Error",
-                        msg:"Saving to database failed; please try again later"
+                        toast: {
+                            type: "error",
+                            msg: "Saving to database failed; please try again later"
+                        }
                     });
                 }
             });
@@ -128,15 +139,19 @@ module.exports = function(app,models,KEY){
     app.delete('/api/news/:id',function(req,res){
         if(!req.user){
             res.json({
-                type:'error',
-                msg: 'You have to be logged in for that!'
+                toast:{
+                    type:'error',
+                    msg: 'You have to be logged in for that!'
+                }
             });
             return;
         }
         if(req.user.perms < 2){
             res.json({
-                type:'error',
-                msg:"You don't have permission to do that!"
+                toast:{
+                    type:'error',
+                    msg:"You don't have permission to do that!"
+                }
             });
             return;
         }
@@ -145,8 +160,10 @@ module.exports = function(app,models,KEY){
             if(err){
                 console.log(err);
                 res.json({
-                    type: 'error',
-                    msg: 'Server unavailable'
+                    toast:{
+                        type: 'error',
+                        msg: 'Server unavailable'
+                    }
                 });
             }
         });
@@ -244,36 +261,37 @@ module.exports = function(app,models,KEY){
                 token: uuid.v4()
             });
 
-            var maildata = {
-                from: "CCHS National Honor Society",
-                to: nUser.email,
-                subject: "Please Verify Your Account",
-                text: "Please click the following link to complete your registration.\n" +
-                "If the link is unavailable, copy and paste it into your address bar.\n" +
-                "https://cchs-nhs.com/#/login/"+nUser.token,
-                html: "Please click the following link to complete your registration.\n" +
-                "If the link is unavailable, copy and paste it into your address bar.\n" +
-                '<a href="https://cchs-nhs.com/#/login/'+nUser.token+'">https://cchs-nhs.com/#/login/'+nUser.token+'</a>'
-            };
-
-            transporter.sendMail(maildata,function(err,info){
-                if(err != undefined){
-                    console.log(err);
-                }
-                console.log("Message sent to " + maildata.to);
-            });
-
             nUser.save(function(err) {
                 if (err) {
                     console.log(err);
                     res.json({
-                        error: {
+                        toast: {
                             type: 'error',
                             msg: 'server unavailable'
                         }
                     });
                     return;
                 }
+
+                var maildata = {
+                    from: "CCHS National Honor Society",
+                    to: nUser.email,
+                    subject: "Please Verify Your Account",
+                    text: "Please click the following link to complete your registration.\n" +
+                    "If the link is unavailable, copy and paste it into your address bar.\n" +
+                    "https://cchs-nhs.com/#/login/"+nUser.token,
+                    html: "Please click the following link to complete your registration.\n" +
+                    "If the link is unavailable, copy and paste it into your address bar.\n" +
+                    '<a href="https://cchs-nhs.com/#/login/'+nUser.token+'">https://cchs-nhs.com/#/login/'+nUser.token+'</a>'
+                };
+
+                transporter.sendMail(maildata,function(err,info){
+                    if(err != undefined){
+                        console.log(err);
+                    }
+                    console.log("Message sent to " + maildata.to);
+                });
+
                 var profile = {
                     id: nUser._id,
                     email: nUser.email,
@@ -291,13 +309,71 @@ module.exports = function(app,models,KEY){
     });
     app.put('/api/user',function(req,res){
         if(req.user === undefined || req.user === null){
-            res.json({
-                toast :{
-                    type: 'error',
-                    msg: 'You have to be logged in for that!'
-                }
-            });
-            return;
+            if(req.body.email != undefined){
+
+                models.Users.findOne({"email":req.body.email}).exec(function(err,user){
+                    if(err){
+                        res.json({
+                            toast:{
+                                type:'error',
+                                msg:'Server unavailable'
+                            }
+                        });
+                        return;
+                    }
+                    if(user == null || user == undefined) {
+                        res.json({
+                            toast: {
+                                type: 'info',
+                                msg: 'User not found.'
+                            }
+                        });
+                        return;
+                    }
+                    if(user.verified){
+                        res.json({
+                            toast: {
+                                type: 'info',
+                                msg: 'Your email has already been verified!'
+                            }
+                        });
+                        return;
+                    }
+                    user.token = uuid.v4();
+                    user.save(function(saveError){
+
+                        var maildata = {
+                            from: "CCHS National Honor Society",
+                            to: user.email,
+                            subject: "Please Verify Your Account",
+                            text: "Please click the following link to complete your registration.\n" +
+                            "If the link is unavailable, copy and paste it into your address bar.\n" +
+                            "https://cchs-nhs.com/#/login/"+user.token,
+                            html: "Please click the following link to complete your registration.\n" +
+                            "If the link is unavailable, copy and paste it into your address bar.\n" +
+                            '<a href="https://cchs-nhs.com/#/login/'+user.token+'">https://cchs-nhs.com/#/login/'+user.token+'</a>'
+                        };
+
+                        transporter.sendMail(maildata,function(mailError,info){
+                            if(mailError != undefined){
+                                console.log(mailError);
+                            }else console.log("Message sent to " + maildata.to);
+                            console.log(info);
+                        });
+                    });
+
+                });
+
+            }else{
+                res.json({
+                    toast :{
+                        type: 'error',
+                        msg: 'You have to be logged in for that!'
+                    }
+                });
+                return;
+            }
+
         }
         if(req.body.token != undefined){
             var id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
