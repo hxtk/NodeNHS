@@ -120,7 +120,7 @@ app.controller('logCtl', ['$http', '$scope', '$rootScope', '$routeParams', 'toas
 }]);
 
 app.controller('registerCtl', ['$http', '$scope', '$rootScope', 'toast', function($http,$scope,$rootScope,toast){
-    if( != undefined) location.assign('#/');
+    if(localStorage.getItem('token') != undefined) location.assign('#/');
     $scope.register = function(){
         if(!$scope.name || !$scope.email || !$scope.cemail || !$scope.password || !$scope.cpassword || !$scope.year){
             toast({type:'info',msg:'must fill in all fields'});
