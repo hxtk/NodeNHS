@@ -26,9 +26,17 @@ ready(function() {
                 j.lastElementChild.style.overflowY = 'scroll';
                 j.lastElementChild.style.overflowX = 'hidden';
             }
-
         }else{
             reheight(document.getElementById("search"),'46px');
         }
-    }
+    };
+    document.getElementById("search").onkeyup = function(){
+        j = document.getElementById("search");
+        if(j.scrollHeight > window.innerHeight){
+            console.log(j.lastElementChild);
+            j.lastElementChild.style.height = '300px';
+            j.lastElementChild.style.overflowY = 'scroll';
+            j.lastElementChild.style.overflowX = 'hidden';
+        }
+    };
 });
