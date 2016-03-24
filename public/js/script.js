@@ -21,7 +21,6 @@ ready(function() {
             j = document.getElementById("search");
             reheight(j,'auto');
             if(j.scrollHeight > window.innerHeight){
-                console.log(j.lastElementChild);
                 j.lastElementChild.style.height = '300px';
                 j.lastElementChild.style.overflowY = 'scroll';
                 j.lastElementChild.style.overflowX = 'hidden';
@@ -31,6 +30,7 @@ ready(function() {
         }
     };
     document.getElementById("search").onkeyup = function(){
+        console.log("keyup");
         j = document.getElementById("search");
         if(j.scrollHeight > window.innerHeight){
             console.log(j.lastElementChild);
