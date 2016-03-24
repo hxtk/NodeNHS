@@ -21,8 +21,9 @@ ready(function() {
             j = document.getElementById("search");
             reheight(j,'auto');
             if(j.scrollHeight > window.innerHeight){
-                reheight(j,'300px');
-                j.style.overflowY = 'scroll';
+                console.log(j.lastElementChild);
+                j.lastElementChild.style.height = '300px';
+                j.lastElementChild.style.overflowY = 'scroll';
             }
 
         }else{
