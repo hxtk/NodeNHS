@@ -21,7 +21,7 @@ ready(function() {
             j = document.getElementById("search");
             reheight(j,'auto');
             if(j.clientHeight > document.body.scrollHeight){
-                reheight(j,(document.body.scrollHeight - 100) + 'px');
+                reheight(j,'300px');
                 j.style.overflowY = 'scroll';
             }
 
