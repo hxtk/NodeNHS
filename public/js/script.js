@@ -18,7 +18,13 @@ function isDescendant(el,q){
 ready(function() {
     document.onclick = function(e){
         if(isDescendant(e.target,document.getElementById("search"))){
-            reheight(document.getElementById("search"),'auto');
+            j = document.getElementsByName("search");
+            reheight(j,'auto');
+            if(g.clientHeight > document.body.clientHeight){
+                reheight(j,document.body.clientHeight - 100 + 'px');
+                j.style.overflowY = 'scroll';
+            }
+
         }else{
             reheight(document.getElementById("search"),'46px');
         }
