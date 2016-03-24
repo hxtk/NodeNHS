@@ -31,11 +31,12 @@ html(lang="en" ng-app="app")
          a.g.nav(href="#/register") Register
          #search(ng-controller="searchCtl")
             input(type="text" ng-change="getsearch()" ng-model="query" placeholder="Search...")
-            .resultbox(ng-repeat="x in results.users")
-               a(href="#/u/{{x.id}}")
-                  div
-                     .resultname {{x.name}}
-                     .resulttitle {{x.title}}
+            div
+               .resultbox(ng-repeat="x in results.users")
+                  a(href="#/u/{{x.id}}")
+                     div
+                        .resultname {{x.name}}
+                        .resulttitle {{x.title}}
          #dropdown
             span#ddtitle {{token.title}} #[i.down]
             a.g.nav(href="#/login") Sign In
