@@ -20,7 +20,7 @@ ready(function() {
         if(isDescendant(e.target,document.getElementById("search"))){
             j = document.getElementById("search");
             reheight(j,'auto');
-            if(g.clientHeight > document.body.scrollHeight){
+            if(j.clientHeight > document.body.scrollHeight){
                 reheight(j,(document.body.scrollHeight - 100) + 'px');
                 j.style.overflowY = 'scroll';
             }
