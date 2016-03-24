@@ -24,6 +24,7 @@ ready(function() {
                 console.log(j.lastElementChild);
                 j.lastElementChild.style.height = '300px';
                 j.lastElementChild.style.overflowY = 'scroll';
+                j.lastElementChild.style.overflowX = 'hidden';
             }
 
         }else{
