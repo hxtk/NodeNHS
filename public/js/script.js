@@ -20,23 +20,8 @@ ready(function() {
         if(isDescendant(e.target,document.getElementById("search"))){
             j = document.getElementById("search");
             reheight(j,'auto');
-            if(j.scrollHeight > window.innerHeight){
-                j.lastElementChild.style.height = '300px';
-                j.lastElementChild.style.overflowY = 'scroll';
-                j.lastElementChild.style.overflowX = 'hidden';
-            }
         }else{
             reheight(document.getElementById("search"),'46px');
-        }
-    };
-    document.getElementById("search").onkeyup = function(){
-        console.log("keyup");
-        j = document.getElementById("search");
-        if(j.scrollHeight > window.innerHeight){
-            console.log(j.lastElementChild);
-            j.lastElementChild.style.height = '300px';
-            j.lastElementChild.style.overflowY = 'scroll';
-            j.lastElementChild.style.overflowX = 'hidden';
         }
     };
 });
