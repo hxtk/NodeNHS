@@ -99,35 +99,39 @@ body {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px; }
-
-.resultbox {
-  padding-left: 20px;
-  padding-top: 10px;
-  padding-right: 20px;
-  background-color: grey;
-  height: 50px;
-  width: 434px; }
-  .resultbox a {
-    display: block;
-    text-decoration: none; }
-    .resultbox a:link {
-      color: white; }
-    .resultbox a:visited {
-      color: white; }
-    .resultbox a:hover {
-      color: white;
-      background-color: lightgrey; }
-    .resultbox a:active {
-      color: white; }
-
-.resultname {
-  width: 100%;
-  font-size: 18px; }
-
-.resulttitle {
-  width: 100%;
-  font-size: 14px;
-  color: white; }
+  #search #searchresults {
+    /*
+    height: auto;
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    */ }
+    #search #searchresults .resultbox {
+      padding-left: 20px;
+      padding-top: 10px;
+      padding-right: 20px;
+      background-color: grey;
+      height: 50px;
+      width: 434px; }
+      #search #searchresults .resultbox a {
+        display: block;
+        text-decoration: none; }
+        #search #searchresults .resultbox a:link {
+          color: white; }
+        #search #searchresults .resultbox a:visited {
+          color: white; }
+        #search #searchresults .resultbox a:hover {
+          color: white;
+          background-color: lightgrey; }
+        #search #searchresults .resultbox a:active {
+          color: white; }
+        #search #searchresults .resultbox a .resultname {
+          width: 100%;
+          font-size: 18px; }
+        #search #searchresults .resultbox a .resulttitle {
+          width: 100%;
+          font-size: 14px;
+          color: white; }
 
 .article {
   padding: 5px 5px 5px 5px;
