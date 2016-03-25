@@ -31,7 +31,7 @@ html(lang="en" ng-app="app")
          a.g.nav(href="#/register") Register
          #search(ng-controller="searchCtl")
             input(type="text" ng-change="getsearch()" ng-model="query" placeholder="Search...")
-            div
+            #searchresults
                .resultbox(ng-repeat="x in results.users")
                   a(href="#/u/{{x.id}}")
                      div
