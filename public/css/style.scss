@@ -147,16 +147,19 @@ body{
         &:visited { color: white; }
         &:hover   { color: white; background-color: lightgrey; }
         &:active  { color: white; }
+
+        .resultname {
+          width:100%;
+          font-size:18px;
+        }
+        .resulttitle{
+          width:100%;
+          font-size:14px;
+          color:white;
+        }
+
       }
-    }
-    .resultname {
-      width:100%;
-      font-size:18px;
-    }
-    .resulttitle{
-      width:100%;
-      font-size:14px;
-      color:white;
+
     }
   }
 

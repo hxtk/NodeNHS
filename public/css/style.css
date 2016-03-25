@@ -123,13 +123,13 @@ body {
           background-color: lightgrey; }
         #search div .resultbox a:active {
           color: white; }
-    #search div .resultname {
-      width: 100%;
-      font-size: 18px; }
-    #search div .resulttitle {
-      width: 100%;
-      font-size: 14px;
-      color: white; }
+        #search div .resultbox a .resultname {
+          width: 100%;
+          font-size: 18px; }
+        #search div .resultbox a .resulttitle {
+          width: 100%;
+          font-size: 14px;
+          color: white; }
 
 .article {
   padding: 5px 5px 5px 5px;
