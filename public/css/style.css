@@ -100,19 +100,17 @@ body {
     -moz-border-radius: 5px;
     border-radius: 5px; }
   #search #searchresults {
-    /*
-    height: auto;
     max-height: 300px;
     overflow-y: scroll;
-    overflow-x: hidden;
-    */ }
+    overflow-x: hidden; }
     #search #searchresults .resultbox {
       padding-left: 20px;
       padding-top: 10px;
       padding-right: 20px;
       background-color: grey;
       height: 50px;
-      width: 434px; }
+      width: 434px;
+      overflow: auto; }
       #search #searchresults .resultbox a {
         display: block;
         text-decoration: none; }
