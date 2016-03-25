@@ -104,32 +104,35 @@ body {
     max-height: 300px;
     overflow-y: scroll;
     overflow-x: hidden; }
-    #search div .resultbox {
-      padding-left: 20px;
-      padding-top: 10px;
-      padding-right: 20px;
-      background-color: grey;
-      height: 50px;
-      width: 434px; }
-      #search div .resultbox a {
-        display: block;
-        text-decoration: none; }
-        #search div .resultbox a:link {
-          color: white; }
-        #search div .resultbox a:visited {
-          color: white; }
-        #search div .resultbox a:hover {
-          color: white;
-          background-color: lightgrey; }
-        #search div .resultbox a:active {
-          color: white; }
-        #search div .resultbox a .resultname {
-          width: 100%;
-          font-size: 18px; }
-        #search div .resultbox a .resulttitle {
-          width: 100%;
-          font-size: 14px;
-          color: white; }
+
+.resultbox {
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-right: 20px;
+  background-color: grey;
+  height: 50px;
+  width: 434px; }
+  .resultbox a {
+    display: block;
+    text-decoration: none; }
+    .resultbox a:link {
+      color: white; }
+    .resultbox a:visited {
+      color: white; }
+    .resultbox a:hover {
+      color: white;
+      background-color: lightgrey; }
+    .resultbox a:active {
+      color: white; }
+
+.resultname {
+  width: 100%;
+  font-size: 18px; }
+
+.resulttitle {
+  width: 100%;
+  font-size: 14px;
+  color: white; }
 
 .article {
   padding: 5px 5px 5px 5px;

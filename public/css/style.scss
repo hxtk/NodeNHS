@@ -109,6 +109,8 @@ body{
     height: auto;
   }
 
+
+
   input{
     margin-right: auto;
     margin-left: auto;
@@ -126,43 +128,40 @@ body{
     border-radius: 5px;
   }
 
-  div{
-
+  div {
     height: auto;
     max-height: 300px;
     overflow-y: scroll;
     overflow-x: hidden;
-
-    .resultbox {
-      padding-left: 20px;
-      padding-top: 10px;
-      padding-right: 20px;
-      background-color: grey;
-      height:50px;
-      width:434px;
-      a{
-        display: block;
-        text-decoration: none;
-        &:link    { color: white; }
-        &:visited { color: white; }
-        &:hover   { color: white; background-color: lightgrey; }
-        &:active  { color: white; }
-
-        .resultname {
-          width:100%;
-          font-size:18px;
-        }
-        .resulttitle{
-          width:100%;
-          font-size:14px;
-          color:white;
-        }
-
-      }
-
-    }
   }
 
+}
+
+
+.resultbox {
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-right: 20px;
+  background-color: grey;
+  height:50px;
+  width:434px;
+  a{
+    display: block;
+    text-decoration: none;
+    &:link    { color: white; }
+    &:visited { color: white; }
+    &:hover   { color: white; background-color: lightgrey; }
+    &:active  { color: white; }
+  }
+}
+.resultname {
+  width:100%;
+  font-size:18px;
+}
+.resulttitle{
+  width:100%;
+  font-size:14px;
+  color:white;
 }
 
 .article {
