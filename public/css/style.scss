@@ -144,7 +144,7 @@ body{
       height:50px;
       width:434px;
       overflow:hidden;
-      
+
       a{
         display: block;
         text-decoration: none;
@@ -156,11 +156,17 @@ body{
         .resultname {
           width:100%;
           font-size:18px;
+
+          border-bottom:0px;
+          padding-bottom:2px;
         }
         .resulttitle{
           width:100%;
           font-size:14px;
           color:white;
+
+          border-top:0px;
+          padding-top:2px;
         }
 
       }

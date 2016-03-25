@@ -126,11 +126,15 @@ body {
           color: white; }
         #search div .resultbox a .resultname {
           width: 100%;
-          font-size: 18px; }
+          font-size: 18px;
+          border-bottom: 0px;
+          padding-bottom: 2px; }
         #search div .resultbox a .resulttitle {
           width: 100%;
           font-size: 14px;
-          color: white; }
+          color: white;
+          border-top: 0px;
+          padding-top: 2px; }
 
 .article {
   padding: 5px 5px 5px 5px;
